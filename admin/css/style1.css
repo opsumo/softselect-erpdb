@@ -1,0 +1,18 @@
+.sortable {width:900px; border:1px solid #EFF4FC; border-bottom:none}
+.sortable th {padding:4px 6px 6px; background:#0060A9; color:#0060A9; text-align:left; color:#ccc;font-size:small;font-weight:bold;}
+.sortable td {padding:2px 4px 4px; background:#fff; border-bottom:1px solid #ccc;font-size:small;}
+.sortable .head {background:#0060A9 url(sort.gif) 6px center no-repeat; cursor:pointer; padding-left:18px}
+.sortable .desc {background:#222 url(desc.gif) 6px center no-repeat; cursor:pointer; padding-left:18px}
+.sortable .asc {background:#222 url(asc.gif) 6px  center no-repeat; cursor:pointer; padding-left:18px}
+.sortable .head:hover, .sortable .desc:hover, .sortable .asc:hover {color:#fff}
+.sortable .even td {background:#f2f2f2}
+.sortable .odd td {background:#fff}
+.sortable1 {width:100%; border:1px solid #EFF4FC; border-bottom:none}
+.sortable1 th {padding:4px 6px 6px; background:#0060A9; color:#0060A9; text-align:left; color:#ccc;font-size:8pt;font-weight:bold;}
+.sortable1 td {padding:2px 2px 4px; background:#fff; border-bottom:1px solid #ccc;font-size:8pt;}
+.sortable1 .head {background:#0060A9 url(sort.gif) 6px center no-repeat; cursor:pointer; padding-left:18px}
+.sortable1 .desc {background:#222 url(desc.gif) 6px center no-repeat; cursor:pointer; padding-left:18px}
+.sortable1 .asc {background:#222 url(asc.gif) 6px  center no-repeat; cursor:pointer; padding-left:18px}
+.sortable1 .head:hover, .sortable .desc:hover, .sortable .asc:hover {color:#fff}
+.sortable1 .even td {background:#f2f2f2}
+.sortable1 .odd td {background:#fff} 

@@ -1,0 +1,129 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	/* font: 100% Verdana, DejaVuSans, Arial, Helvetia, Sans; */
+	font-family: Helvetica;
+	font-size:10pt;
+	color: #515151;
+	width:100%;
+	line-height: 144%;
+	border-collapse:collapse;
+}
+
+#container {
+	width: 95%;
+	background: #FFFFFF;
+	margin: 0 auto; /* the auto margins (in conjunction with a width) center the page */
+	text-align: left;
+	padding-top: 15pt;
+}
+h3 {
+	font-size: 144%;
+	font-weight: bold;
+	font-style: italic;
+	color: #0060a9;
+	line-height: 134%;
+	margin-top: 4pt;
+	margin-bottom: 12pt;
+}
+h4 {
+	font-size: 122%;
+	font-weight: bold;
+	font-style: italic;
+	color: #0060a9;
+	line-height: 134%;
+	margin-top: 12pt;
+	margin-bottom: 12pt;
+}
+#intro {
+	width: 75%;
+	float: left;
+}
+#legend {
+	width: 17%;
+	float: right;
+	border:1px solid #515151;
+	padding:10px 10px 5px 15px;
+	line-height: 174%;
+	background-color:#eff4fc;
+	font-size:10pt;
+}
+p {	
+	clear: both; 
+}
+table {
+	width: 100%;
+	border:1px solid #515151;
+	margin-top:8pt;
+	margin-bottom:0pt;
+	border-collapse:collapse;
+}
+thead {
+	display: table-header-group;
+}
+th {
+	font-size:100%;
+	line-height: 120%;
+	text-align:left;
+	padding:8pt 7pt 8pt 7pt;
+	background-color:#eff4fc;
+	color:#0060a9;
+	border:1px dotted #777;
+}
+td, #customers th {
+	font-size:1em;
+	padding:5pt 7pt 5pt 7pt;
+	cell-spacing:0;
+	border:1px dotted #777;
+}
+tr:nth-child(odd) { 
+	background-color:#eee; 
+}
+tr:nth-child(even) { 
+	background-color:#fff; 
+}
+ul {
+	margin-top:-5pt;
+	line-height: 174%;
+}
+ul li{
+	line-height: 174%;
+}
+.asterisk {
+	font-size: 85%;
+	color:#858585;
+}
+a:link {
+	color: #0060a9;
+}
+.centeredImage
+{
+    text-align:center;
+    margin-top:0pt;
+    margin-bottom:0pt;
+    padding:0pt;
+}
+a:visited {
+	color: #858585;
+}
+.footer {
+	margin-top:20pt;
+	color:#777;
+	text-align: center;
+	padding: 20pt 24pt 0pt 16pt;
+	font-size:8pt
+}
+.footer-text {
+	width:95%;
+	text-align:center;
+	float:left
+}
+.footer-pagenum {
+	float:right
+}
+img {
+	// width:16px;
+	// height:16px;
+	vertical-align:middle;
+}
