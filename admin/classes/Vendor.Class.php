@@ -132,10 +132,27 @@ function Vendor()
 	}
 	
  	function Update()
-	{	
-		$vendor_id = $_REQUEST['vendor_id'];
-		$sql = "UPDATE vendor SET vendor_name='".stripper($_POST['vendor_name'])."', www='".stripper($_POST['vendor_desc'])."', review_date='".stripper($_POST['review_date'])."', notes='".stripper($_POST['notes'])."' WHERE vendor_id = '$vendor_id'";
-		$res = mysqli_query($this->con, $sql) or die(mysqli_error($this->con));
+    {
+        $vendor_id = $_REQUEST['vendor_id'];
+
+        if ($_POST['review_date']) {
+            $review_date = date_format(date_create($_POST['review_date']), "Y-m-d");
+        } else {
+            $review_date = null;
+        }
+
+        $stmt = mysqli_prepare($this->con,
+            'UPDATE vendor SET vendor_name=?,www=?,review_date=?,notes=? WHERE vendor_id=?');
+        mysqli_stmt_bind_param(
+                $stmt,
+                "ssssi",
+                $_POST['vendor_name'],
+                $_POST['vendor_desc'],
+                $review_date,
+                $_POST['notes'],
+                $vendor_id
+        );
+		$res = mysqli_stmt_execute($stmt) or die(mysqli_error($this->con));
 		echo "<script>window.location = 'index.php?module=Vendor&mode=ManageVendor'</script>";
 	}
 	
@@ -170,5 +187,12 @@ function Vendor()
 		echo "<script>window.location='index.php?module=Vendor&mode=ManageVendor&msg=$msg'</script>";
 */
 	}
+    
+    function checkBrokenLinks($url) {
+        $h = get_headers($url);
+        $status = array();
+        preg_match('/HTTP\/.* ([0-9]+) .*/', $h[0] , $status);
+        return ($status[1] == 200);
+    }
 }
 ?>

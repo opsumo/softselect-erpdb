@@ -226,7 +226,7 @@ else
 		$Product = "";
 	if($Product!="")
 	{
-		$sql = "SELECT p.* FROM product p JOIN vendor v on v.vendor_id = p.vendor_id WHERE p.product_name LIKE '$Product%' ORDER BY ".$order_by." ASC";
+		$sql = "SELECT p.* FROM product p JOIN vendor v on v.vendor_id = p.vendor_id WHERE p.product_name LIKE '%$Product%' ORDER BY ".$order_by." ASC";
 		$qs = "module=Product&mode=ManageProduct&txt_Product=".$Product;
 	}
 	else if(isset($_REQUEST['stat']))

@@ -121,6 +121,13 @@ while($trow = mysqli_fetch_array($restml))
 	$tcount++;
 }
 mysqli_free_result($restml);
+
+function checkBrokenLinks($url) {
+    $h = get_headers($url);
+    $status = array();
+    preg_match('/HTTP\/.* ([0-9]+) .*/', $h[0] , $status);
+    return ($status[1] == 200);
+} 
 ?>
 <input type="hidden" id="productid" value="<?php echo $product_id;?>"/>
 <table style="font-size:8pt;" width="800px" border="0" cellpadding="2" cellspacing="2">

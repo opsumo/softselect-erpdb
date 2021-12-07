@@ -134,7 +134,7 @@ class softselect
 
             $result = mysqli_query($this->link, $sql) or die(mysqli_error($this->link));
             $row = mysqli_fetch_array($result);
-            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = getUserIpAddr(); //$_SERVER['REMOTE_ADDR'];
             mysqli_free_result($result);
             if ($row) {
                 $user_id = $row[0];
@@ -259,7 +259,6 @@ class softselect
 		$data = array();
 		$dataheader = array();
 		$databody = array();	
-		$i = 0;
 		$x = 0;
 
 		if(!empty($this->link))
@@ -488,4 +487,18 @@ public function getReportData($id)
 		if(!empty($this->link)) mysqli_close($this->link);
 	}
 }
+
+function getUserIpAddr(){
+    if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+        //ip from share internet
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+        //ip pass from proxy
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }else{
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return $ip;
+}
+
 ?>

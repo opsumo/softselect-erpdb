@@ -388,6 +388,48 @@ session_start();
 			});
 		}
 	});
+        $("#menu_home").click(function(e){
+            $("#input_module").val('Admin');
+            $("#input_mode").val('Home');
+
+        });
+        $("#menu_users").click(function(e){
+            $("#input_module").val('Users');
+            $("#input_mode").val('ManageUsers');
+
+        });
+        $("#menu_history").click(function(e){
+            $("#input_module").val('Report');
+            $("#input_mode").val('ManageReport');
+
+        });
+        $("#menu_report").click(function(e){
+            $("#input_module").val('Query');
+            $("#input_mode").val('QueryReport');
+
+        });
+        $("#menu_blacklist").click(function(e){
+            $("#input_module").val('BlockIP');
+            $("#input_mode").val('ManageBlockedIP');
+
+        });
+        $("#menu_logout").click(function(e){
+            $("#input_module").val('Admin');
+            $("#input_mode").val('Logout');
+
+        });
+        $("#menu_industry").click(function(e){
+            $("#input_module").val('Industry');
+            $("#input_mode").val('ManageIndustries');
+        });
+        $("#menu_vendor").click(function(e){
+            $("#input_module").val('Vendor');
+            $("#input_mode").val('ManageVendor');
+        });
+        $("#menu_product").click(function(e){
+            $("#input_module").val('Product');
+            $("#input_mode").val('ManageProduct');
+        });
     $(function() {
         $( "#vendor_review_date" ).datepicker({
             showOn: "button",
@@ -419,6 +461,12 @@ function valSubmit()
 	}
 	return valid;
 }
+    function menuButtonClick(module, mode) {
+        alert($("#module").val());
+        $("#module").val(module);
+        $("#mode").val(mode);
+        $("#menu_form").submit();
+    }
 </script>
 <style type="text/css">
 	.ui-widget {
@@ -501,23 +549,24 @@ function valSubmit()
 <?php
 if(isset($_SESSION['admin_login']) && $_SESSION['admin_login']==='true')
 {
-?>    
+?>
+    <form id="menu_form" action="index.php" method="post">
+        <input type="hidden" id="input_module" name="module" value="Admin"/>
+        <input type="hidden" id="input_mode" name="mode" value="Home"/>
          <div id="menu">
-    	       <ul>
-                    <li><a href="index.php?module=Admin&mode=Home" class="menu_link">Home</a></li>
-                    <li><a href="index.php?module=Users&mode=ManageUsers" class="menu_link">Users</a></li>   
-                    <li><a href="index.php?module=Report&mode=ManageReport" class="menu_link">History</a></li>
-                    <!--<li><a href="http://<?php echo $_SERVER['HTTP_HOST'];?>/ERP-Comparison-Database/report/index.php" target="_blank" class="menu_link">Report</a></li>-->
-                    <li><a href="index.php?module=Query&mode=QueryReport" class="menu_link">Report</a></li>
-                    <li><a href="index.php?module=BlockIP&mode=ManageBlockedIP" class="menu_link">IP Blacklist</a></li>
-                    <li><a href="index.php?module=Vendor&mode=ManageVendor" class="menu_link">Vendor</a></li>
-                    <li><a href="index.php?module=Product&mode=ManageProduct" class="menu_link">Product</a></li>
-                   <!-- <li><a href="index.php?module=Company&mode=ManageCompanies" class="menu_link">Company Size</a></li>-->
-                    <li><a href="index.php?module=Industry&mode=ManageIndustries" class="menu_link">Industry</a></li>
-                    <li><a href="index.php?module=Tracker&mode=ManageTracker" class="menu_link">Tracker</a></li>
-                    <li><a href="index.php?module=Admin&mode=Logout" class="menu_link">Logout</a></li>
+                 <ul>
+                     <li><input type="submit" id="menu_home" value="Home" class="menu_link"/></li>
+                     <li><input type="submit" id="menu_users" value="Users" class="menu_link"/></li>
+                     <li><input type="submit" id="menu_history" value="History" class="menu_link"/></li>
+                     <li><input type="submit" id="menu_report" value="Report" class="menu_link"/></li>
+                     <li><input type="submit" id="menu_blacklist" value="IP Blacklist" class="menu_link"/></li>
+                     <li><input type="submit" id="menu_vendor" value="Vendor" class="menu_link"/></li>
+                     <li><input type="submit" id="menu_product" value="Product" class="menu_link"/></li>
+                     <li><input type="submit" id="menu_industry" value="Industry" class="menu_link"/></li>
+                     <li><input type="submit" id="menu_logout" value="Logout" class="menu_link"/></li>
                  </ul>
           </div>
+    </form>
 <?php
 	}
 ?>                
@@ -527,10 +576,9 @@ if(isset($_SESSION['admin_login']) && $_SESSION['admin_login']==='true')
 <?php
 require_once("classes/DB.Class.php");
 $Obj = new DBCon();								
-	if(isset($_GET['module'])){
-		$getModule = $_GET['module'];
-		$file_name = "classes/".$getModule.".Class.php";
-		$Class_Name = $getModule; // Get the class name
+	if(isset($_REQUEST['module'])){
+		$Class_Name = $_REQUEST['module'];
+		$file_name = "classes/".$Class_Name.".Class.php";
 		if (file_exists($file_name)) {
 			require_once($file_name); // Include that file
 			$Class_Obj = new $Class_Name; // Create an instance for that class
