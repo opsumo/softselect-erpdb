@@ -107,7 +107,7 @@ $vendor = isset($_REQUEST['txt_vendor'])?$_REQUEST['txt_vendor']:'';
 	$sql = "SELECT v.*, (SELECT COUNT(*) FROM product p WHERE p.vendor_id = v.vendor_id) product_count FROM vendor v";
 	if($vendor!="")
 	{
-		$sql = $sql." WHERE v.vendor_name LIKE '$vendor%' ORDER BY v.vendor_name ASC";
+		$sql = $sql." WHERE v.vendor_name LIKE '%$vendor%' ORDER BY v.vendor_name ASC";
 		$qs = "module=Vendor&mode=ManageVendor&txt_vendor=".$vendor;
 	}
 	else if(isset($_REQUEST['stat'])) {
