@@ -29,7 +29,7 @@ if (r==true)
 				alert('There was an error updating this Vendor, please try again.');
 			}
 		});
-	
+
   }
 else
   {
@@ -65,21 +65,22 @@ else
 <?php
 $vendor = isset($_REQUEST['txt_vendor'])?$_REQUEST['txt_vendor']:'';
 ?>
-<table cellspacing="0" cellpadding="5" align="center" id="vendor-table" boder="1">	
+<table cellspacing="0" cellpadding="5" align="center" id="vendor-table" boder="1">
 	<tr height="60" bgcolor="#FFFFFF">
     	<td align="center" colspan="5">
-			<form method="post" action="">		
+			<form method="post" action="">
             	<label><strong>Search Vendor by Name</strong>&nbsp;</label>
             	<input type="text" size="50" name="txt_vendor" id="txt_vendor" value="<?php echo $vendor;?>"/>&nbsp;
                 <input type="submit" name="btn_vendor" value="Go" id="btn_vendor"/>
-			</form>				
-        </td>        
+			</form>
+        </td>
 	</tr>
 	<tr bgcolor="#FFFFFF">
 		<td>Filter status:
 			<select id="vstatus" onchange="reloadvendor()">
 				<option value="all" <?php echo (isset($_REQUEST['stat']) && $_REQUEST['stat']=='all')?'selected':'';?>>All</option>
 				<option value="active" <?php echo (isset($_REQUEST['stat']) && $_REQUEST['stat']=='active')?'selected':'';?>>Active</option>
+        <option value="inactive" <?php echo (isset($_REQUEST['stat']) && $_REQUEST['stat']=='inactive')?'selected':'';?>>Inactive</option>
 			</select>
 		</td>
 		<td>&nbsp;</td>
@@ -88,7 +89,7 @@ $vendor = isset($_REQUEST['txt_vendor'])?$_REQUEST['txt_vendor']:'';
 		<td align="center">
         	<a style="color:#000000; font-weight:bolder; text-decoration:none;" href="index.php?module=Vendor&mode=NewVendor">New Vendor</a>
         </td>
-	</tr>	
+	</tr>
 <?php
 	/*
 	include_once('../../includes/config.inc');
@@ -116,10 +117,13 @@ $vendor = isset($_REQUEST['txt_vendor'])?$_REQUEST['txt_vendor']:'';
 			case "active":
 				$sql = $sql." WHERE status=1 order by vendor_name asc";
 			break;
+      case "inactive":
+				$sql = $sql." WHERE status=0 order by vendor_name asc";
+			break;
 			default:
 				$sql = $sql." ORDER BY vendor_name ASC";
 			break;
-				
+
 		}
 		$qs = "module=Vendor&mode=ManageVendor&stat=".$status;
 	}
@@ -127,7 +131,9 @@ $vendor = isset($_REQUEST['txt_vendor'])?$_REQUEST['txt_vendor']:'';
 	{
 		$sql =  $sql." ORDER BY vendor_name ASC";
 		$qs = "module=Vendor&mode=ManageVendor";
-	}	
+	}
+
+
 	$pager = new PS_Pagination($conn, $sql, 30, 20, $qs);
 	$pager->setDebug(true);
 	$rs = $pager->paginate();
@@ -169,7 +175,7 @@ $vendor = isset($_REQUEST['txt_vendor'])?$_REQUEST['txt_vendor']:'';
     	<a style="cursor:pointer;" onclick="deactivate_confirm1(<?php echo $row['vendor_id']; ?>)">
     		<img src="images/button_green.gif" alt="Active" border="0" />
     	</a>
-    <?php    
+    <?php
         }
         else
         {
@@ -177,15 +183,15 @@ $vendor = isset($_REQUEST['txt_vendor'])?$_REQUEST['txt_vendor']:'';
     	<a style="cursor:pointer;" onclick="activate_confirm1(<?php echo $row['vendor_id']; ?>)">
     		<img src="images/button_red.gif" alt="Inactive" border="0" />
     	</a>
-    <?php    
+    <?php
         }
     ?>
-    </td> 
+    </td>
     <td align="center"><a href="index.php?module=Vendor&mode=NewVendor&id=<?php echo $row['vendor_id']; ?>"><img src="images/b_edit.png" border="0" alt="Edit" /></a></td>
     <td align="center"><a onClick="delete_confirm(<?php echo $row['vendor_id'];?>)"><img src="images/deleted.png" border="0" alt="Delete" /></a></td>
   </tr>
-<?php		
-			$j++;	
+<?php
+			$j++;
 		}
 ?>
   <tr bgcolor="#FFFFFF">
@@ -206,8 +212,8 @@ $vendor = isset($_REQUEST['txt_vendor'])?$_REQUEST['txt_vendor']:'';
 	//alert('here');
 	var e = document.getElementById('vstatus');
 	var sel = e.options[e.selectedIndex].value;
-	
+
 	window.location='index.php?module=Vendor&mode=ManageVendor&stat='+sel;
-	
+
 	}
 </script>

@@ -28,7 +28,7 @@ if (r==true)
 				alert('There was an error updating this Industry, please try again.');
 			}
 		});
-	
+
   }
 else
   {
@@ -81,29 +81,29 @@ else
 	// $status = mysqli_select_db(DB_NAME, $conn);
 //	if(!$status) echo mysqli_error($conn)."<br>Failed to select database!";
 	if(isset($_REQUEST['stat'])) {
-		
+
 		if($_REQUEST['stat'] === 'active') {
-			$sql="SELECT market_id as marketid, market_description as marketdescription, status 
+			$sql="SELECT market_id as marketid, market_description as marketdescription, status
 				FROM target_market
-				WHERE market_id <> -1 and status <> 0	
-				ORDER BY CASE WHEN market_id = -1 
+				WHERE market_id <> -1 and status <> 0
+				ORDER BY CASE WHEN market_id = -1
 				THEN '' ELSE market_description END";
-			$m = 'module=Industry&mode=ManageIndustries&stat'.$_REQUEST['stat'];
+			$m = 'module=Industry&mode=ManageIndustries&stat='.$_REQUEST['stat'];
 		}
 		else if($_REQUEST['stat'] === 'all'){
-			$sql = "SELECT market_id as marketid, market_description as marketdescription, status 
+			$sql = "SELECT market_id as marketid, market_description as marketdescription, status
 			FROM target_market
-			WHERE market_id <> -1		
-			ORDER BY CASE WHEN market_id = -1 
+			WHERE market_id <> -1
+			ORDER BY CASE WHEN market_id = -1
 			THEN '' ELSE market_description END";
-			$m = 'module=Industry&mode=ManageIndustries&stat'.$_REQUEST['stat'];
+			$m = 'module=Industry&mode=ManageIndustries&stat='.$_REQUEST['stat'];
 		}
 	}
 	else {
-	$sql = "SELECT market_id as marketid, market_description as marketdescription, status 
+	$sql = "SELECT market_id as marketid, market_description as marketdescription, status
 			FROM target_market
-			WHERE market_id <> -1		
-			ORDER BY CASE WHEN market_id = -1 
+			WHERE market_id <> -1
+			ORDER BY CASE WHEN market_id = -1
 			THEN '' ELSE market_description END";
 			$m = "module=Industry&mode=ManageIndustries";
 	}
@@ -136,21 +136,21 @@ else
         {
     ?>
     	<a style="cursor:pointer;" onclick="deactivate_confirm2(<?php echo $row['marketid']; ?>)"><img src="images/button_green.gif" alt="Active" border="0" /></a>
-    <?php    
+    <?php
         }
         else
         {
     ?>
     	<a style="cursor:pointer;" onclick="activate_confirm2(<?php echo $row['marketid']; ?>)"><img src="images/button_red.gif" alt="Inactive" border="0" /></a>
-    <?php    
+    <?php
         }
     ?>
-    </td>     
+    </td>
     <td align="center"><a href="index.php?module=Industry&mode=NewIndustry&id=<?php echo $row['marketid']; ?>"><img src="images/b_edit.png" border="0" alt="Edit" /></a></td>
     <td align="center"><a onClick="delete_confirm(<?php echo $row['marketid'];?>)"><img src="images/deleted.png" border="0" alt="Delete" /></a></td>
   </tr>
-<?php		
-			$j++;	
+<?php
+			$j++;
 		}
 ?>
   <tr>
@@ -171,8 +171,8 @@ else
 	//alert('here');
 	var e = document.getElementById('istatus');
 	var sel = e.options[e.selectedIndex].value;
-	
+
 	window.location='index.php?module=Industry&mode=ManageIndustries&stat='+sel;
-	
+
 	}
 </script>

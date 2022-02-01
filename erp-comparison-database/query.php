@@ -41,13 +41,13 @@ if(!empty($result['header']) && !empty($result['body']))
 		<!-- <tr>
 			<td style="font-weight:bold;" colspan="2">
 				<center>ERP Comparison Database Results<br />North American ERP Market</center>
-			</td>			
+			</td>
 		</tr> -->
 		<tr style="background-color:#fff">
 			<td style="border-top:1px #657f93 solid;border-left:1px #657f93 solid;" valign="top">
                 <p style="text-align:justify;font-size:.8em;padding:2px;margin:0;">
                     This report shows ERP that EAI has determined has discernible usage history in companies matching the
-                    criteria in the three right columns. This data does not reflect key selection factors such as ERP vendor
+                    criteria in the three right columns. This information does not reflect key selection factors such as ERP vendor
                     strength, ERP technology status, and the ERP's ability to meet a company's specific functional priorities.
                 </p>
             </td>
@@ -69,7 +69,7 @@ if(!empty($result['header']) && !empty($result['body']))
 		<th style="white-space:none;overflow:hidden;">Web Site</th>
 		<th style="white-space:none;overflow:hidden;width:63px;vertical-align:top;">Company<br/> Size:<br/><span style="color:#272626;"><?php echo $result['header'][0][3];?></span></th>
 		<th style="white-space:none;overflow:hidden;width:75px;vertical-align:top;">Primary<br/> Industry:<br/><span style="color:#272626;"><?php echo $result['header'][0][5];?></span></th>
-		<th style="white-space:none;overflow:hidden;width:75px;vertical-align:top;">Secondary<br/> Industry:<br/><span style="color:#272626;"><?php echo $result['header'][0][7];?></span></th>		
+		<th style="white-space:none;overflow:hidden;width:75px;vertical-align:top;">Secondary<br/> Industry:<br/><span style="color:#272626;"><?php echo $result['header'][0][7];?></span></th>
 		</tr>
 		</thead>
 		<tbody>
@@ -82,7 +82,7 @@ if(!empty($result['header']) && !empty($result['body']))
 			<td style="white-space:none;overflow:hidden;"><?php echo !empty($rows[1])?$rows[1]:'';?></td>
 			<td style='vertical-align:middle;white-space:none;overflow:hidden;'><a href="<?php echo !empty($rows[3])?$rows[3]:'#';?>" target="_blank"><?php  echo !empty($rows[2])?$rows[2]:'';?></a></td>
 			<td align="center" style='vertical-align:middle;'><?php echo (!empty($rows[5]) && strlen($rows[5]) > 4 )?$imgpath.str_replace(array("<IMG src=\"",">"),'',$rows[5])."\"/>":"";?></td>
-			<td align="center" style='vertical-align:middle;'><?php echo (!empty($rows[6]) && strlen($rows[6]) > 4 )?$imgpath.str_replace(array("<IMG src=\"",">"),'',$rows[6])."\"/>":"";?></td>	
+			<td align="center" style='vertical-align:middle;'><?php echo (!empty($rows[6]) && strlen($rows[6]) > 4 )?$imgpath.str_replace(array("<IMG src=\"",">"),'',$rows[6])."\"/>":"";?></td>
 			<td align="center" style='vertical-align:middle;'><?php echo (!empty($rows[7]) && strlen($rows[7]) > 4 )?$imgpath.str_replace(array("<IMG src=\"",">"),'',$rows[7])."\"/>":"";?></td>
 		</tr>
 		<?php $c++;?>
@@ -93,7 +93,7 @@ if(!empty($result['header']) && !empty($result['body']))
 		<tr>
             <td style="font-family:arial;font-size:.7em;padding-left:8px;padding-top: 5px;text-align:justify;">
 				<?php if($forced_in): ?>
-				* Listings that show no level of suitability for the criteria of (1) company size and/or 
+				* Listings that show no level of suitability for the criteria of (1) company size and/or
 				(2) Industries (primary and secondary) were added by the person configuring this report.<br/><br/>
 				<?php endif; ?>
                 <u>ERP Database Purpose and Limitations</u>: This database provides high-level information that shows software packages that
@@ -103,19 +103,19 @@ if(!empty($result['header']) && !empty($result['body']))
                     <li>Challenging ERP short lists</li>
                     <li>Validating current ERP</li>
                 </ul>
-					This data is not designed for use in making final decisions on the suitability of particular software 
-					packages for a specific company seeking ERP. The only way to understand true suitability of candidate 
-					software solutions is to carefully and consistently measure them against your organization's most 
-					important functional and non-functional priorities. Also ERP vendor viability is an increasingly relevant 
+					This data is not designed for use in making final decisions on the suitability of particular software
+					packages for a specific company seeking ERP. The only way to understand true suitability of candidate
+					software solutions is to carefully and consistently measure them against your organization's most
+					important functional and non-functional priorities. Also ERP vendor viability is an increasingly relevant
 					topic and should be a key differentiating factor in any ERP search.<p />
-					<u>ERP Database Usage Terms</u>: This online enterprise software database is the copyrighted and intellectual 
-					property of Engleman Associates, Inc. and can only be used for enterprise software projects for which you 
-					are directly involved. This ERP evaluation database has been available since 2001 and includes links 
+					<u>ERP Database Usage Terms</u>: This online enterprise software database is the copyrighted and intellectual
+					property of Engleman Associates, Inc. and can only be used for enterprise software projects for which you
+					are directly involved. This ERP evaluation database has been available since 2001 and includes links
 					to all listed ERP software vendors from North America.
              </td>
         </tr>
     </table>
-    <br/>    
+    <br/>
 	    <table width="98%">
 	    	<tr>
 	    		<td style="text-align:center"><center><button id="reportprintbtn" style="font-size:.7em;font-weight:bold;" onclick="printdata('<?php echo $result['id'];?>')"></button></center></td>
@@ -125,16 +125,16 @@ if(!empty($result['header']) && !empty($result['body']))
 			<input type="hidden" name="id" value="<?php echo $result['id'];?>" />
 		</form>
 <script>
-	$(document).ready(function(){		
+	$(document).ready(function(){
 		$("#query-result-table").tablesorter
 		({
-			headers: 
+			headers:
 			{
 				3: {sorter:false},
 				4: {sorter:false},
 				5: {sorter:false}
 			}
-		});	
+		});
 		$("#reportprintbtn").button({
 			label: 'Print',
   			icons: {primary: 'ui-icon-print'}
@@ -155,6 +155,6 @@ else
 	<div id="nodata">Listings that show no level of suitability for the criteria of
 (1) company size and (2) product manufactured, were
 added by the the person configuring this report.</div>
-<?php	
+<?php
 }
 ?>

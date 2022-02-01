@@ -22,6 +22,10 @@ else
 	return false;
   }
 }
+function prt(col)
+{
+	console.log(col);
+}
 </script>
 <p>&nbsp;</p>
 <?php
@@ -52,26 +56,26 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
 		if(!$conn) echo mysqli_error($conn)."<br>Failed to connect to database!";
 		// $status = mysqli_select_db(DB_NAME, $conn);
 //		if(!$status) echo mysqli_error($conn)."<br>Failed to select database!";
-			
+
 		$data = array();
 		$dataheader = array();
-		$databody = array();	
+		$databody = array();
 		$i = 0;
 		$x = 0;
 
 		if(!empty($conn))
 		{
 			// get the header
-			
-			$sql = "SELECT	'c.description' AS CategoryDsc, 
-					'c.spc_definition' AS SPCDefinition, 
+
+			$sql = "SELECT	'c.description' AS CategoryDsc,
+					'c.spc_definition' AS SPCDefinition,
 					'c.spc_instructions' AS SPCInstructions,
 					r.descript AS CostRangeDsc,
 					q.market_id1,
 					m1.market_description AS MarketDsc1,
 					q.market_id2,
 					m2.market_description AS MarketDsc2,
-					q.mfg_type_id1,					
+					q.mfg_type_id1,
 					q.focus_level1,
 					q.focus_level2,
 					q.focus_level3,
@@ -79,8 +83,8 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
 					FROM query q
 					JOIN cost_range r ON r.cost_range_id = q.cost_range_id
 					JOIN target_market m1 ON m1.market_id = q.market_id1
-					JOIN target_market m2 ON m2.market_id = q.market_id2					
-					WHERE q.query_id = ".$id;			
+					JOIN target_market m2 ON m2.market_id = q.market_id2
+					WHERE q.query_id = ".$id;
 			$res_head = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 			while($rows1 = mysqli_fetch_row($res_head))
 			{
@@ -97,32 +101,33 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
 				$dataheader[$x][10] = $rows1[10];
 				$dataheader[$x][11] = $rows1[11];
 				$dataheader[$x][12] = $rows1[12];
-				$dataheader[$x][13] = $rows1[13];				
+				$dataheader[$x][13] = $rows1[13];
 				$x++;
 			}
 			mysqli_free_result($res_head);
 
 			// get the body
-			 
 
-				
-			$sqlresult = 'SELECT  v.vendor_name AS Vendor, 
-                                    p.product_name AS Product, 
-                                    CASE WHEN INSTR(v.www, \'://\') > 0 THEN v.www ELSE CONCAT(\'http://\', v.www) END AS website, 
+
+
+			$sqlresult = 'SELECT  v.vendor_name AS Vendor,
+                                    p.product_name AS Product,
+                                    CASE WHEN INSTR(v.www, \'://\') > 0 THEN v.www ELSE CONCAT(\'http://\', v.www) END AS website,
+																		p.mtco AS MultiTenant,
                                     s.focus_level AS company_size,
                                     i1.focus_level AS primary_industry,
-                                    i2.focus_level AS secondary_industry						 
-                            FROM  product p 
+                                    i2.focus_level AS secondary_industry
+                            FROM  product p
                             JOIN  query q ON q.query_id = '.$id.'
                             JOIN  vendor v ON p.vendor_id = v.vendor_id
                             LEFT JOIN  product_cost_range s ON s.product_id = p.product_id AND s.cost_range_id = q.cost_range_id
                             LEFT JOIN  product_market i1 ON i1.product_id = p.product_id AND i1.market_id = q.market_id1
-                            LEFT JOIN  product_market i2 ON i2.product_id = p.product_id AND i2.market_id = q.market_id2 
+                            LEFT JOIN  product_market i2 ON i2.product_id = p.product_id AND i2.market_id = q.market_id2
                             WHERE p.product_id IN ( SELECT pq.product_id
                                                     FROM  product pq
                                                     JOIN query q ON q.query_id = '.$id.'
                                                     JOIN product_cost_range qs ON qs.cost_range_id = q.cost_range_id AND pq.product_id = qs.product_id AND qs.focus_level BETWEEN 1 AND 3
-                                                    JOIN  product_market qi1 ON ((qi1.market_id = q.market_id1 AND qi1.focus_level BETWEEN 1 AND 3) OR q.market_id1 = -1) AND pq.product_id = qi1.product_id 
+                                                    JOIN  product_market qi1 ON ((qi1.market_id = q.market_id1 AND qi1.focus_level BETWEEN 1 AND 3) OR q.market_id1 = -1) AND pq.product_id = qi1.product_id
                                                     JOIN  product_market qi2 ON ((qi2.market_id = q.market_id2 AND qi2.focus_level BETWEEN 1 AND 3) OR q.market_id2 = -1) AND pq.product_id = qi2.product_id
                                                     WHERE pq.status = 1)
                             OR FIND_IN_SET(p.product_id, q.package_id_string) > 0
@@ -135,6 +140,7 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
 			while($rows = mysqli_fetch_array($result))
 			{
 				//echo $rows[0].','.$rows[1].','.$rows[2].','.$rows[3].','.$rows[4].','.$rows[5].'<br/>';
+				prt(echo $rows[0].','.$rows[1].','.$rows[2].','.$rows[3].','.$rows[4].','.$rows[5]);
 				$databody[$i][0] = $rows[0];
 				$databody[$i][1] = $rows[1];
 				$databody[$i][2] = $rows[2];
@@ -143,15 +149,15 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
 				$databody[$i][5] = getImage(1,$rows[3]);
 				$databody[$i][6] = getImage(1,$rows[4]);
 				$databody[$i][7] = getImage(1,$rows[5]);
-				$i++;					
+				$i++;
 			}
-		
+
 		}
-		
+
 		$data['header'] = $dataheader;
 		$data['body'] = $databody;
 		$data['id'] = $id;
-		
+
 	$imgpath ="<img style='vertical-align:middle;' height='11px' width='11px' src=\"images/";
 	if(!empty($data['header']) && !empty($data['body']))
 	{?>
@@ -162,34 +168,36 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
 			</tr>
 		</table>
 	</div>
-	<center>	
+	<center>
 	<table border="0" cellpadding="0" cellspacing="0" id="query-result-table" width="100%" style="font-family:arial;font-size:8pt;">
 		<tr>
 		<th>Vendor</th>
 		<th>Product Name</th>
 		<th>Web Site</th>
+		<th>Multi-Tenant Only</th>
 		<th>Company Size:<br/><?php echo $data['header'][0][3];?></th>
 		<th>Primary<br/> Industry:<br/><?php echo $data['header'][0][5];?></th>
-		<th>Secondary<br/> Industry:<br/><?php echo $data['header'][0][7];?></th>		
+		<th>Secondary<br/> Industry:<br/><?php echo $data['header'][0][7];?></th>
 		</tr>
 	<?php foreach($data['body'] as $key=>$rows): ?>
 		<tr>
 			<td><?php echo !empty($rows[0])?$rows[0]:'';?></td>
 			<td><?php echo !empty($rows[1])?$rows[1]:'';?></td>
 			<td><a href="<?php echo !empty($rows[3])?$rows[3]:'#';?>" target="_blank"><?php echo !empty($rows[2])?$rows[2]:'';?></a></td>
-			<td><?php echo (!empty($rows[5]) && strlen($rows[5]) > 4 )?$imgpath.str_replace(array("<IMG src=\"",">"),'',$rows[5])."\"/>":"";?></td>			
-			<td><?php echo (!empty($rows[6]) && strlen($rows[6]) > 4 )?$imgpath.str_replace(array("<IMG src=\"",">"),'',$rows[6])."\"/>":"";?></td>			
-			<td><?php echo (!empty($rows[7]) && strlen($rows[7]) > 4 )?$imgpath.str_replace(array("<IMG src=\"",">"),'',$rows[7])."\"/>":"";?></td>					
+			<td><?php echo !empty($rows[1])?$rows[4]:'';?></td>
+			<td><?php echo (!empty($rows[5]) && strlen($rows[5]) > 4 )?$imgpath.str_replace(array("<IMG src=\"",">"),'',$rows[5])."\"/>":"";?></td>
+			<td><?php echo (!empty($rows[6]) && strlen($rows[6]) > 4 )?$imgpath.str_replace(array("<IMG src=\"",">"),'',$rows[6])."\"/>":"";?></td>
+			<td><?php echo (!empty($rows[7]) && strlen($rows[7]) > 4 )?$imgpath.str_replace(array("<IMG src=\"",">"),'',$rows[7])."\"/>":"";?></td>
 		</tr>
 	<?php endforeach; ?>
-	</table>	
+	</table>
     </center>
 	<?php
 	}
 	else
 	{?>
 		<span id="nodata">This query has no data.</span>
-	<?php	
+	<?php
 	}
 	}
 	else {
@@ -201,7 +209,7 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
 	if(!$conn) echo mysqli_error($conn)."<br>Failed to connect to database!";
 //    $status = mysqli_select_db(DB_NAME, $conn);
 //	if(!isset($status)||!$status) echo mysqli_error($conn)."<br>Failed to select database!";
-	
+
 	if(isset($_REQUEST['txt_email']))
 		$email = stripper($_REQUEST['txt_email']);
 	else if(isset($_REQUEST['txt_report']))
@@ -253,10 +261,10 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
             q.ip_address,
             u.firm_type,
             u.geo_location,
-            'ERP' AS CategoryDsc, 
+            'ERP' AS CategoryDsc,
             r.descript AS CostRangeDsc,
             m1.market_description AS MarketDsc1,
-            m2.market_description AS MarketDsc2,				
+            m2.market_description AS MarketDsc2,
             q.printed
             FROM query q
             JOIN user u ON u.user_id = q.user_id
@@ -284,7 +292,7 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
 ?>
 
   <tr>
-  
+
 	<th>ID</th>
 		<th>Date/Time</th>
 		<th>Email</th>
@@ -294,8 +302,8 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
 		<!-- <th>Category</th>-->
 		<th>Company Size</th>
 		<th>Primary Industry</th>
-		<th>Secondary Industry</th>		
-		<th>Printed</th> 
+		<th>Secondary Industry</th>
+		<th>Printed</th>
   </tr>
 <?php
 		$j = 0;
@@ -317,14 +325,14 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
   	<td style="font-size:6pt;"><?php echo isset($emailadd)?$emailadd:''; ?></td>
   	<td style="font-size:6pt;"><?php echo isset($ipadd)?$ipadd:''; ?></td>
   	<!-- <td><?php //echo isset($row[4])?$row[4]:''; ?></td>-->
-  	<td style="font-size:6pt;"><?php echo isset($row[5])?$row[5]:''; ?></td> 
+  	<td style="font-size:6pt;"><?php echo isset($row[5])?$row[5]:''; ?></td>
   	<!-- <td style="font-size:6pt;"><?php echo isset($row[6])?$row[6]:''; ?></td>-->
   	<td style="font-size:6pt;"><?php echo isset($row[7])?$row[7]:''; ?></td>
   	<td style="font-size:6pt;"><?php echo isset($row[8])?$row[8]:''; ?></td>
   	<td style="font-size:6pt;"><?php echo isset($row[9])?$row[9]:''; ?></td>
   	<!--<td><?php //echo isset($row[10])?$row[10]:''; ?></td>
   	<td style="font-size:6pt;"><?php //echo isset($row[11])?$row[11]:''; ?></td>-->
-  	<td style="font-size:6pt;text-align:center"><?php echo (isset($row[10]) && $row[10] == 1)?'YES':'NO'; ?></td> 
+  	<td style="font-size:6pt;text-align:center"><?php echo (isset($row[10]) && $row[10] == 1)?'YES':'NO'; ?></td>
   </tr>
 
 <?php
@@ -345,7 +353,7 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
     </td>
   </tr>
  </table>
-<?php 
+<?php
 	}
 	else
 	{
