@@ -49,6 +49,7 @@ if(!empty($result['header']) && !empty($result['body']))
                     This report shows ERP that EAI has determined has discernible usage history in companies matching the
                     criteria in the three right columns. This information does not reflect key selection factors such as ERP vendor
                     strength, ERP technology status, and the ERP's ability to meet a company's specific functional priorities.
+                    ‘Multi-tenant’ ERP is directly controlled by the ERP seller and customers share various resources.
                 </p>
             </td>
  			<td style="width:230px;border-top:1px #657f93 solid;border-right:1px #657f93 solid;border-left:1px #657f93 solid;font-size:.8em;padding-left: 15px;vertical-align:middle;" nowrap>

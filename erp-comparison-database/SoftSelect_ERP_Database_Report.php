@@ -34,10 +34,12 @@ $result = $db->getReportForPrint($id);
 <body>
 <div id="container">
   <div id="intro">
-  <h3>ERP Comparison Database Results - North American ERP Market</h3>
+      <h3>ERP Comparison Database Results - North American ERP Market</h3>
       This report shows ERP that EAI has determined has discernible usage history in companies matching the
       criteria in the three right columns. This data does not reflect key selection factors such as ERP vendor
-      strength, ERP technology status, and the ERP's ability to meet a company's specific functional priorities.</div>
+      strength, ERP technology status, and the ERP's ability to meet a company's specific functional priorities.
+      ‘Multi-tenant’ ERP is directly controlled by the ERP seller and customers share various resources.
+  </div>
 
 <div id="legend">
 	<strong>History of Use Legend</strong><p />
