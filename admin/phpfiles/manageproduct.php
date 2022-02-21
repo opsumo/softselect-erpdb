@@ -38,22 +38,20 @@ $('#dialog').dialog({
 					var current_id = $('#product_id').val();
 					var product_name = $('#product').val();
 
-					var url = '';
-
-					if(current_id<=0)
-					{
-					url = "module=Product&mode=NewProduct&name="+product_name;
-					}
-					else
-					{
-						url = "module=Product&mode=NewProduct&id="+current_id+"&name="+product_name;
-					}
-					//alert(url);
+                    var postData = {
+                        module: "Product",
+                        mode: "NewProduct",
+                        name: product_name
+                    };
+                    if (current_id) {
+                        postData.id = current_id;
+                    }
 
 					 $.ajax({
-					   type: "GET",
+					   type: "POST",
 					   url: "ajax.php",
-					   data: url,
+                       dataType: "json",
+                       data: postData,
 					   success: function(msg){
 							//alert( "Data Saved: " + msg );
 							window.location.reload();
@@ -175,7 +173,7 @@ else
 <table cellspacing="0" cellpadding="5" align="center" width="95%" id="product-table">
 	<tr height="60" bgcolor="#FFFFFF">
     	<td colspan="6" align="center" >
-		   	<form method="get" action="">
+		   	<form method="post" action="">
             	<input type="hidden" name="module" value="Product" />
                 <input type="hidden" name="mode" value="ManageProduct" />
             	<label><strong>Search Product by Name</strong>&nbsp;</label>
@@ -277,10 +275,10 @@ else
 			$sql1 = "SELECT * FROM vendor WHERE vendor_id='".$row['vendor_id']."'";
 			$res1 = mysqli_query($conn, $sql1);
 			$row1 = mysqli_fetch_array($res1);
-            $url = $row1['www'];
+      $www = $row1['www'];
 
-            if (strpos($url, '://') === FALSE && $url ) {
-                $url = 'http://'.$url;
+            if (strpos($www, '://') === FALSE && $www ) {
+                $www = 'http://'.$www;
             }
 
 			if(($j%2)==0)
@@ -290,7 +288,7 @@ else
 ?>
   <tr bgcolor="<?php echo $bgcolor; ?>">
   	<td><?php echo $row1['vendor_name']; ?></td>
-  	<td><a href="<?php echo $url; ?>" target="_blank"><?php echo $url; ?></a></td>
+  	<td><a href="<?php echo $www; ?>" target="_blank"><?php echo $www; ?></a></td>
   	<td><?php echo $row['product_name']; ?></td>
     <td align="center">
 	<?php
@@ -390,7 +388,10 @@ function reloadproduct(){
 					var review_date = $("#review_date").val();
           var www = $("#www").val();
           var notes = $("#notes").val();
-          var mtco = $("#mtxo").val(); console.log("MTXO::>>%s",mtco);
+          var mtco = $("#mtxo").val(); 
+          
+          console.log("URL::>>%s",www);
+          console.log("MTCO::>>%s",mtco);
 
 					//review_date = $.datepicker.formatDate('yy-dd-mm', review_date);
 
@@ -457,30 +458,28 @@ function reloadproduct(){
 					var url = "phpfiles/saveproductschanges.php";
 					//var post_data_obj = {id:pid, prod_name:prod_name, vendor_id:vendor_id, review_date:review_date, notes:notes}; //, 'procost[]':procost, 'promarket[]':promarket};
 					var post_data = {
-                    id:pid,
+                    id:pid, mtco:mtco, notes:notes, www:www,
 										prod_name:product_name,
 										vendor_id:vendor_id,
 										review_date:review_date,
-                    www:www,
-                    notes:notes,
-                    mtco:mtco,
 										'procost[]':procost,
 										'promarket[]':promarket
 									}; //, 'procost[]':procost, 'promarket[]':promarket};
-                    var post_data_qry = $.param(post_data);
-                    // show hourglass while saving
-                    $(document.body).css({'cursor' : 'wait'});
-                    // get DOM element for button
-                    var buttonDomElement = evt.target;
-                    // Disable the button
-                    $(buttonDomElement).attr('disabled', true);
-
-                    $.post("phpfiles/saveproductschanges.php", post_data,
+          var post_data_qry = $.param(post_data);
+          // show hourglass while saving
+          $(document.body).css({'cursor' : 'wait'});
+          // get DOM element for button
+          var buttonDomElement = evt.target;
+          // Disable the button
+          $(buttonDomElement).attr('disabled', true);
+          console.log('posturl:', url);                          
+          console.log('postdata:', post_data);
+          $.post(url, post_data,
 						function(response) {
         					$('#product-dialog').dialog( "close" );
         					$("#btn_Product").click();
                             // show hourglass while saving
-                            $(document.body).css({'cursor' : 'default'});
+                  $(document.body).css({'cursor' : 'default'});
     				});
 
 				},
@@ -574,7 +573,7 @@ function reloadproduct(){
                     var buttonDomElement = evt.target;
                     // Disable the button
                     $(buttonDomElement).attr('disabled', true);
-                    console.log('post data:', post_data);
+                    //console.log('post data:', $.post_data);
                     $.post(url,{'procost[]':procost,'promarket[]':promarket}, function(response) {
         					/*$("#save-result").html(response);*/
         					$('#new-product-dialog').dialog( "close" );

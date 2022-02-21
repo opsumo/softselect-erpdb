@@ -11,38 +11,19 @@ $prod_name = isset($_REQUEST['prod_name'])?$_REQUEST['prod_name']:'';
 $review_date = isset($_REQUEST['review_date'])?$_REQUEST['review_date']:'';
 $www = isset($_REQUEST['www'])?$_REQUEST['www']:'';
 $notes = isset($_REQUEST['notes'])?$_REQUEST['notes']:'';
-//$mtco = isset($_REQUEST['mtco'])?$_REQUEST['mtco']:'';
 $mtco = (isset($_REQUEST['mtco']) && $_REQUEST['mtco']!="")?$_REQUEST['mtco']:0;
-//$mtco = '0';
-//$mtco = isset($_REQUEST['mtxo'])?$_REQUEST['mtxo']:'';
-//$mtco=filter_input(INPUT_POST, 'mtxo', FILTER_SANITIZE_STRING)?"1":"0";
-// sanitize the value
-//$mtco = filter_input(INPUT_POST, 'mtco', FILTER_SANITIZE_STRING);
-/*if(filter_has_var(INPUT_POST,'mtxo')) {
-  //$mtco='1';
-	$mtco=$_POST['mtxo']);
-	<script>
-		console.log("CHECKBOX:%s %s",filter_input(INPUT_POST, 'mtxo', FILTER_SANITIZE_STRING), $mtco);
-	</script>
-	echo "CHECKBOX:".filter_input(INPUT_POST, 'mtxo', FILTER_SANITIZE_STRING);
-} else {
-	$mtco='0';
-}*/
-/*if (isset($_POST['mtco'])) {
-	$mtco="1";
-} else $mtco = "0";*/
-//$mtco = (isset($_REQUEST['mtxo']) && $_REQUEST['mtxo']!="")?1:0;
-//$mtco = (empty($_POST['mtco'])) ? 1 : 0;
 
 // fix up review date format
 $review_date = (""==$review_date)?'NULL':"'".date('Y-m-d', strtotime($review_date))."'";
 
 /*
-
 todo: 	change new product function to call edit product with empty id
 		check for dup product name?  product + vendor should be unique yes?
-
 */
+
+function consoleLog($msg) {
+		echo '<script type="text/javascript">' . 'console.log(' . $msg . ');</script>';
+}
 
 if (empty($id)) {
 	// add new product & capture ID with SELECT LAST_INSERT_ID();
@@ -62,6 +43,13 @@ if (empty($id)) {
 				www = '".$www."',
 				notes = '".$notes."',
 				mtco = ".$mtco." where product_id=".$id;
+
+    //$prod = fopen("/tmp/prod.txt", "w");  
+    // writing content to a file using fwrite() function
+    //echo fwrite($prod, $sql);  
+    // closing the file
+    //fclose($prod);
+
 	mysqli_query($con, $sql) or die(mysqli_error($con));
 }
 

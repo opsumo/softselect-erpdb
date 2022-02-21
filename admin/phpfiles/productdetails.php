@@ -15,9 +15,9 @@ if (!empty($product_id)) {
 		$productname = $row['product_name'];
 		$vendor_id = $row['vendor_id'];
 		$review_date = (''==$row['review_date']||empty($row['review_date']))?'':date('m/d/Y', strtotime($row['review_date']));
-        $www = $row['www'];
-        $notes = $row['notes'];
-		$mtco = $row['mtco'];
+    $www = $row['www'];
+    $notes = $row['notes'];
+	$mtco = $row['mtco'];
 	}
 	mysqli_free_result($res);
 } else {
@@ -193,7 +193,7 @@ function checkBrokenLinks($url) {
 				<tr><td colspan="6">
 
 					<label>Multi-tenant Cloud Only:
-						<input type="checkbox" id="mtxo" name="mtxo" onclick="$(this).attr('value', this.checked ? 1 : 0)" \
+						<input type="checkbox" id="mtxo" name="mtxo" value="<?php echo $mtco;?>" onclick="$(this).attr('value', this.checked ? 1 : 0)" \
                             <?php echo ($mtco==1)?"checked":"";?> />
 					</label>
 			 	</td></tr>
@@ -244,14 +244,15 @@ function checkBrokenLinks($url) {
 <script>
 
 		var isCheckbox = document.querySelector('#mtxo');
-
+        //$("#mtxo").val()=isCheckbox.checked ? '1' : '0';
+        console.log("mtc0:%s", $("#mtxo").val());
 		$("#mtxo").click(function(){
 			$mtco = $("#mtxo").val();
 
 			console.log("mtco:%s %s", $mtco, isCheckbox.checked ? 'Is Checked' : 'Is Unchecked');
             //$mtco = isCheckbox.checked ? 1 : 0;
             //document.write(mtco);
-		});    
+		});
 
 		$("#addnewmarket").click(function(){
 			var tmarketid = $("#productmarketlist option:selected").val();
@@ -364,7 +365,7 @@ function checkBrokenLinks($url) {
 					}
 				});*/
 			var data = 'phpfiles/updateprodvendor.php?prodid='+productid+'&vendorid='+vendorid;
-			$.get(data, function(data){
+			$.post(data, function(data){
 					if(data == "SUCCESS") {
 						$("#product-dialog").dialog("close");
 
