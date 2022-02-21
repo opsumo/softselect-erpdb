@@ -38,22 +38,20 @@ $('#dialog').dialog({
 					var current_id = $('#product_id').val();
 					var product_name = $('#product').val();
 
-					var url = '';
-
-					if(current_id<=0)
-					{
-					url = "module=Product&mode=NewProduct&name="+product_name;
-					}
-					else
-					{
-						url = "module=Product&mode=NewProduct&id="+current_id+"&name="+product_name;
-					}
-					//alert(url);
+                    var postData = {
+                        module: "Product",
+                        mode: "NewProduct",
+                        name: product_name
+                    };
+                    if (current_id) {
+                        postData.id = current_id;
+                    }
 
 					 $.ajax({
-					   type: "GET",
+					   type: "POST",
 					   url: "ajax.php",
-					   data: url,
+                       dataType: "json",
+                       data: postData,
 					   success: function(msg){
 							//alert( "Data Saved: " + msg );
 							window.location.reload();
@@ -175,7 +173,7 @@ else
 <table cellspacing="0" cellpadding="5" align="center" width="95%" id="product-table">
 	<tr height="60" bgcolor="#FFFFFF">
     	<td colspan="6" align="center" >
-		   	<form method="get" action="">
+		   	<form method="post" action="">
             	<input type="hidden" name="module" value="Product" />
                 <input type="hidden" name="mode" value="ManageProduct" />
             	<label><strong>Search Product by Name</strong>&nbsp;</label>
