@@ -12,8 +12,7 @@ else
 	return false;
   }
 }
-</script>
-<script language="javaScript">
+
 $(document).ready(function(){
 
 $('#message').dialog({
@@ -40,7 +39,7 @@ $('#dialog').dialog({
 
 					var url = '';
 
-					if(current_id<=0)
+/*					if(current_id<=0)
 					{
 					url = "module=Product&mode=NewProduct&name="+product_name;
 					}
@@ -49,11 +48,22 @@ $('#dialog').dialog({
 						url = "module=Product&mode=NewProduct&id="+current_id+"&name="+product_name;
 					}
 					//alert(url);
+*/
+                    var postData = {
+                        module: "Product",
+                        mode: "NewProduct",
+                        name: product_name
+                    };
+                    if (current_id) {
+                        postData.id = current_id;
+                    }
 
 					 $.ajax({
-					   type: "GET",
+					   type: "POST",
 					   url: "ajax.php",
-					   data: url,
+					   //data: url,
+                       dataType: "json",
+                       data: postData,
 					   success: function(msg){
 							//alert( "Data Saved: " + msg );
 							window.location.reload();
@@ -69,24 +79,30 @@ $('#dialog').dialog({
 
 });
 
-function ShowDelete(id,name)
+/*function ShowDelete(id,name)
 {
 	var conf = confirm("Are you sure you want to delete, " +name);
 
 	if(conf==true)
 	{
-		var url="module=Product&mode=Delete&id="+id;
-//alert(url);
-					 $.ajax({
-					   type: "GET",
-					   url: "ajax.php",
-					   data: url,
-					   success: function(msg){
-							   window.location.reload();
-					   }//function(msg)
-					 });
+		//var url="module=Product&mode=Delete&id="+id;
+        var postData={
+            module="Product",
+            mode="Delete",
+            id=id
+        };
+        //alert(url);
+        $.ajax({
+            type: "POST",
+            url: "index.php",
+            dataType: "json",
+            data: postData,
+            success: function(msg){
+                    window.location.reload();
+            }//function(msg)
+        });
 	}
-}
+}*/
 
 function AddNewLocation()
 {
@@ -94,7 +110,6 @@ function AddNewLocation()
 	$('#product').val('');
 	$('#new-product-dialog').dialog('open');
 }
-
 
 function EditLocation(id)
 {
@@ -128,15 +143,45 @@ function EditLocation(id)
 
 function deactivate_confirm(id)
 {
+var r=confirm("Deactivate This Product?");
+if (r==true)
+  {
+	var url="phpfiles/product_actdct.php?mode=deactivate&id="+id;
+	$.post(url,
+		function(data)
+		{
+			if(data === 'SUCCESS') {
+				window.location.reload();
+			}
+			else {
+				alert('There was an error updating this Product, please try again.');
+			}
+		});
+
+  }
+else
+  {
+	return false;
+  }
+}
+
+/*function deactivate_confirm(id)
+{
 
 var r=confirm("Deactivate This Product?");
 if (r==true)
   {
-	var url="module=Product&mode=Deactivate&id="+id;
+	//var url="module=Product&mode=Deactivate&id="+id;
+    var postData={
+        module="Product",
+        mode="Deactivate",
+        id=id
+    };
 	$.ajax({
-		type: "GET",
+		type: "POST",
 		url: "ajax.php",
-		data: url,
+        dataType: "json",
+		data: postData,
 		success: function(msg){
 			   window.location.reload();
 		}
@@ -147,22 +192,51 @@ else
   {
 	return false;
   }
-}
+}*/
+
+/*function activate_confirm(id)
+{
+var r=confirm("Activate This Product?");
+if (r==true)
+  {
+	//var url="module=Product&mode=Activate&id="+id;
+    var postData={
+        module="Product",
+        mode="Activate",
+        id=id
+    };
+	$.ajax({
+		type: "POST",
+		url: "ajax.php",
+        dataType: "json",
+		data: postData,
+		success: function(msg){
+			  window.location.reload();
+		}
+	});
+  }
+else
+  {
+	return false;
+  }
+}*/
 
 function activate_confirm(id)
 {
 var r=confirm("Activate This Product?");
 if (r==true)
   {
-	var url="module=Product&mode=Activate&id="+id;
-	$.ajax({
-		type: "GET",
-		url: "ajax.php",
-		data: url,
-		success: function(msg){
-			  window.location.reload();
-		}
-	});
+	var url="phpfiles/product_actdct.php?mode=activate&id="+id;
+	$.post(url,
+		function(data)
+		{
+			if(data === 'SUCCESS') {
+				window.location.reload();
+			}
+			else {
+				alert('There was an error updating this Product, please try again.');
+			}
+		});
   }
 else
   {
@@ -175,7 +249,7 @@ else
 <table cellspacing="0" cellpadding="5" align="center" width="95%" id="product-table">
 	<tr height="60" bgcolor="#FFFFFF">
     	<td colspan="6" align="center" >
-		   	<form method="get" action="">
+		   	<form method="post" action="">
             	<input type="hidden" name="module" value="Product" />
                 <input type="hidden" name="mode" value="ManageProduct" />
             	<label><strong>Search Product by Name</strong>&nbsp;</label>
@@ -277,10 +351,10 @@ else
 			$sql1 = "SELECT * FROM vendor WHERE vendor_id='".$row['vendor_id']."'";
 			$res1 = mysqli_query($conn, $sql1);
 			$row1 = mysqli_fetch_array($res1);
-            $url = $row1['www'];
+      $www = $row1['www'];
 
-            if (strpos($url, '://') === FALSE && $url ) {
-                $url = 'http://'.$url;
+            if (strpos($www, '://') === FALSE && $www ) {
+                $www = 'http://'.$www;
             }
 
 			if(($j%2)==0)
@@ -290,7 +364,7 @@ else
 ?>
   <tr bgcolor="<?php echo $bgcolor; ?>">
   	<td><?php echo $row1['vendor_name']; ?></td>
-  	<td><a href="<?php echo $url; ?>" target="_blank"><?php echo $url; ?></a></td>
+  	<td><a href="<?php echo $www; ?>" target="_blank"><?php echo $www; ?></a></td>
   	<td><?php echo $row['product_name']; ?></td>
     <td align="center">
 	<?php
@@ -309,7 +383,8 @@ else
     ?>
     </td>
     <td align="center"><a style="cursor:pointer;" onclick="editproduct(<?php echo $row['product_id'];?>);"><img src="images/b_edit.png" border="0" alt="Edit" /></a></td>
-    <td align="center"><a style="cursor:pointer;" onClick="ShowDelete(<?php echo $row['product_id'];?>,'<?php echo $row['product_name'];?>');"><img src="images/deleted.png" border="0" alt="Delete" /></a></td>
+    <!--td align="center"><a style="cursor:pointer;" onClick="ShowDelete(<?php echo $row['product_id'];?>,'<?php echo $row['product_name'];?>');"><img src="images/deleted.png" border="0" alt="Delete" /></a></td-->
+    <td align="center"><a style="cursor:pointer;" onClick="delete_confirm(<?php echo $row['product_id'];?>);"><img src="images/deleted.png" border="0" alt="Delete" /></a></td>
   </tr>
 <?php
 			$j++;
@@ -390,7 +465,10 @@ function reloadproduct(){
 					var review_date = $("#review_date").val();
           var www = $("#www").val();
           var notes = $("#notes").val();
-          var mtco = $("#mtxo").val(); console.log("MTXO::>>%s",mtco);
+          var mtco = $("#mtxo").val(); 
+          
+          console.log("URL::>>%s",www);
+          console.log("MTCO::>>%s",mtco);
 
 					//review_date = $.datepicker.formatDate('yy-dd-mm', review_date);
 
@@ -457,30 +535,28 @@ function reloadproduct(){
 					var url = "phpfiles/saveproductschanges.php";
 					//var post_data_obj = {id:pid, prod_name:prod_name, vendor_id:vendor_id, review_date:review_date, notes:notes}; //, 'procost[]':procost, 'promarket[]':promarket};
 					var post_data = {
-                    id:pid,
+                    id:pid, mtco:mtco, notes:notes, www:www,
 										prod_name:product_name,
 										vendor_id:vendor_id,
 										review_date:review_date,
-                    www:www,
-                    notes:notes,
-                    mtco:mtco,
 										'procost[]':procost,
 										'promarket[]':promarket
 									}; //, 'procost[]':procost, 'promarket[]':promarket};
-                    var post_data_qry = $.param(post_data);
-                    // show hourglass while saving
-                    $(document.body).css({'cursor' : 'wait'});
-                    // get DOM element for button
-                    var buttonDomElement = evt.target;
-                    // Disable the button
-                    $(buttonDomElement).attr('disabled', true);
-
-                    $.post("phpfiles/saveproductschanges.php", post_data,
+          var post_data_qry = $.param(post_data);
+          // show hourglass while saving
+          $(document.body).css({'cursor' : 'wait'});
+          // get DOM element for button
+          var buttonDomElement = evt.target;
+          // Disable the button
+          $(buttonDomElement).attr('disabled', true);
+          console.log('posturl:', url);                          
+          console.log('postdata:', post_data);
+          $.post(url, post_data,
 						function(response) {
         					$('#product-dialog').dialog( "close" );
         					$("#btn_Product").click();
                             // show hourglass while saving
-                            $(document.body).css({'cursor' : 'default'});
+                  $(document.body).css({'cursor' : 'default'});
     				});
 
 				},
@@ -574,7 +650,7 @@ function reloadproduct(){
                     var buttonDomElement = evt.target;
                     // Disable the button
                     $(buttonDomElement).attr('disabled', true);
-                    console.log('post data:', post_data);
+                    //console.log('post data:', $.post_data);
                     $.post(url,{'procost[]':procost,'promarket[]':promarket}, function(response) {
         					/*$("#save-result").html(response);*/
         					$('#new-product-dialog').dialog( "close" );

@@ -101,7 +101,7 @@ function getImage($id,$lvl)
                                     i2.focus_level AS secondary_industry
                             FROM  product p
                             JOIN  query q ON q.query_id = '.$id.'
-                            JOIN  vendor v ON p.vendor_id = v.vendor_id
+                            JOIN  vendor v ON p.vendor_id = v.vendor_id AND v.status = 1                        
                             LEFT JOIN  product_cost_range s ON s.product_id = p.product_id AND s.cost_range_id = q.cost_range_id
                             LEFT JOIN  product_market i1 ON i1.product_id = p.product_id AND i1.market_id = q.market_id1
                             LEFT JOIN  product_market i2 ON i2.product_id = p.product_id AND i2.market_id = q.market_id2
@@ -158,7 +158,9 @@ if(!empty($data['header']) && !empty($data['body']))
 		    <p style="text-align:justify;font-size:.8em;padding:2px;margin:0;">
                 This report shows ERP that EAI has determined has discernible usage history in companies matching the
                 criteria in the three right columns. This information does not reflect key selection factors such as ERP vendor
-                strength, ERP technology status, and the ERP's ability to meet a company's specific functional priorities.				</p>
+                strength, ERP technology status, and the ERP's ability to meet a company's specific functional priorities.
+                ‘Multi-tenant’ ERP is directly controlled by the ERP seller and customers share various resources.
+            </p>
  			</td>
  			<td style="width:230px;border-top:1px #657f93 solid;border-right:1px #657f93 solid;border-left:1px #657f93 solid;font-size:.8em;padding-left: 15px;vertical-align:middle;" nowrap>
  				<u><strong>History of Use Legend</strong></u>
