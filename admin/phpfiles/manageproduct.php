@@ -1,16 +1,21 @@
 <script type="text/javascript">
-function delete_confirm(id)
-{
-var r=confirm("Delete This Product Details?");
-if (r==true)
-  {
-  	var url = 'index.php?module=Product&mode=Delete&id='+id;
-	   window.location=url;
-  }
-else
-  {
-	return false;
-  }
+
+function delete_confirm(id) {
+
+    if (confirm("Delete This Product Details?")) {
+          $.ajax({
+              type: "POST",
+              url: "index.php",
+              dataType: "json",
+              data: {module: "Product", mode: "Delete", id:id};,
+              success: function(msg){
+                  window.location.reload();
+              }
+          });
+    }
+    else {
+        return false;
+    }
 }
 
 $(document).ready(function(){
