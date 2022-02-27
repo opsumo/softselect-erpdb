@@ -10,7 +10,7 @@ $c = mysqli_connect(HOST_NAME,USER_NAME,PASS,DB_NAME) or die(mysqli_error($c));
 // select the database
 //mysqli_select_db(DB_NAME, $c);
 
-switch($_GET['ajaxaction'])
+switch($_REQUEST['ajaxaction'])
 {
 	case "GETRECORDS":
 	    echo(json_encode(GetRecord($c)));

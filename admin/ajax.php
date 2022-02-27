@@ -3,8 +3,8 @@
 
 	require_once("classes/DB.Class.php");
 	$Obj = new DBCon();								
-	if(isset($_GET['module'])){
-		$getModule = $_GET['module'];
+	if(isset($_REQUEST['module'])){
+		$getModule = $_REQUEST['module'];
 		$file_name = "classes/".$getModule.".Class.php";
 		$Class_Name = $getModule; // Get the class name
 		if (file_exists($file_name)) {

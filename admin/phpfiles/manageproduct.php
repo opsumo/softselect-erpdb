@@ -1,23 +1,5 @@
 <script type="text/javascript">
 
-function delete_confirm(id) {
-
-    if (confirm("Delete This Product Details?")) {
-          $.ajax({
-              type: "POST",
-              url: "index.php",
-              dataType: "json",
-              data: {module: "Product", mode: "Delete", id:id};,
-              success: function(msg){
-                  window.location.reload();
-              }
-          });
-    }
-    else {
-        return false;
-    }
-}
-
 $(document).ready(function(){
 
 $('#message').dialog({
@@ -84,31 +66,6 @@ $('#dialog').dialog({
 
 });
 
-/*function ShowDelete(id,name)
-{
-	var conf = confirm("Are you sure you want to delete, " +name);
-
-	if(conf==true)
-	{
-		//var url="module=Product&mode=Delete&id="+id;
-        var postData={
-            module="Product",
-            mode="Delete",
-            id=id
-        };
-        //alert(url);
-        $.ajax({
-            type: "POST",
-            url: "index.php",
-            dataType: "json",
-            data: postData,
-            success: function(msg){
-                    window.location.reload();
-            }//function(msg)
-        });
-	}
-}*/
-
 function AddNewLocation()
 {
 	$('#product_id').val(0);
@@ -146,107 +103,20 @@ function EditLocation(id)
 	$('#dialog').dialog('open');
 }
 
-function deactivate_confirm(id)
-{
-var r=confirm("Deactivate This Product?");
-if (r==true)
-  {
-	var url="phpfiles/product_actdct.php?mode=deactivate&id="+id;
-	$.post(url,
-		function(data)
-		{
-			if(data === 'SUCCESS') {
-				window.location.reload();
-			}
-			else {
-				alert('There was an error updating this Product, please try again.');
-			}
-		});
-
-  }
-else
-  {
-	return false;
-  }
-}
-
-/*function deactivate_confirm(id)
-{
-
-var r=confirm("Deactivate This Product?");
-if (r==true)
-  {
-	//var url="module=Product&mode=Deactivate&id="+id;
-    var postData={
-        module="Product",
-        mode="Deactivate",
-        id=id
-    };
-	$.ajax({
-		type: "POST",
-		url: "ajax.php",
-        dataType: "json",
-		data: postData,
-		success: function(msg){
-			   window.location.reload();
-		}
-	});
-
-  }
-else
-  {
-	return false;
-  }
-}*/
-
-/*function activate_confirm(id)
-{
-var r=confirm("Activate This Product?");
-if (r==true)
-  {
-	//var url="module=Product&mode=Activate&id="+id;
-    var postData={
-        module="Product",
-        mode="Activate",
-        id=id
-    };
-	$.ajax({
-		type: "POST",
-		url: "ajax.php",
-        dataType: "json",
-		data: postData,
-		success: function(msg){
-			  window.location.reload();
-		}
-	});
-  }
-else
-  {
-	return false;
-  }
-}*/
-
-function activate_confirm(id)
-{
-var r=confirm("Activate This Product?");
-if (r==true)
-  {
-	var url="phpfiles/product_actdct.php?mode=activate&id="+id;
-	$.post(url,
-		function(data)
-		{
-			if(data === 'SUCCESS') {
-				window.location.reload();
-			}
-			else {
-				alert('There was an error updating this Product, please try again.');
-			}
-		});
-  }
-else
-  {
-	return false;
-  }
+function product_action(action, id) {
+    if (confirm(`${action} This Product?`)) {
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: {module: "Product", mode: action, id: id},
+            complete: function(msg){
+                window.location.reload();
+            }
+        });
+    }
+    else {
+        return false;
+    }
 }
 
 </script>
@@ -376,20 +246,20 @@ else
         if($row['status']==1)
         {
     ?>
-    	<a style="cursor:pointer;" onclick="deactivate_confirm(<?php echo $row['product_id']; ?>)"><img src="images/button_green.gif" alt="Active" border="0" /></a>
+    	<a style="cursor:pointer;" onclick="product_action('Deactivate', <?php echo $row['product_id']; ?>)"><img src="images/button_green.gif" alt="Active" border="0" /></a>
     <?php
         }
         else
         {
     ?>
-    	<a style="cursor:pointer;" onclick="activate_confirm(<?php echo $row['product_id']; ?>)"><img src="images/button_red.gif" alt="Inactive" border="0" /></a>
+    	<a style="cursor:pointer;" onclick="product_action('Activate', <?php echo $row['product_id']; ?>)"><img src="images/button_red.gif" alt="Inactive" border="0" /></a>
     <?php
         }
     ?>
     </td>
     <td align="center"><a style="cursor:pointer;" onclick="editproduct(<?php echo $row['product_id'];?>);"><img src="images/b_edit.png" border="0" alt="Edit" /></a></td>
     <!--td align="center"><a style="cursor:pointer;" onClick="ShowDelete(<?php echo $row['product_id'];?>,'<?php echo $row['product_name'];?>');"><img src="images/deleted.png" border="0" alt="Delete" /></a></td-->
-    <td align="center"><a style="cursor:pointer;" onClick="delete_confirm(<?php echo $row['product_id'];?>);"><img src="images/deleted.png" border="0" alt="Delete" /></a></td>
+    <td align="center"><a style="cursor:pointer;" onClick="product_action('Delete', <?php echo $row['product_id'];?>);"><img src="images/deleted.png" border="0" alt="Delete" /></a></td>
   </tr>
 <?php
 			$j++;

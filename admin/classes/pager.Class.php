@@ -4,18 +4,18 @@
   { 
   /*********************************************************************************** 
    * int findStart (int limit) 
-   * Returns the start offset based on $_GET['page'] and $limit 
+   * Returns the start offset based on $_REQUEST['page'] and $limit
    ***********************************************************************************/ 
    function findStart($limit) 
     { 
-     if ((!isset($_GET['page'])) || ($_GET['page'] == "1") || ($_GET['page'] < 1)) 
+     if ((!isset($_REQUEST['page'])) || ($_REQUEST['page'] == "1") || ($_REQUEST['page'] < 1))
       { 
        $start = 0; 
-       $_GET['page'] = 1; 
+       $_REQUEST['page'] = 1;
       } 
      else 
       { 
-       $start = ($_GET['page']-1) * $limit; 
+       $start = ($_REQUEST['page']-1) * $limit;
       } 
 
      return $start; 

@@ -193,7 +193,7 @@ function checkBrokenLinks($url) {
 				<tr><td colspan="6">
 
 					<label>Multi-tenant Cloud Only:
-						<input type="checkbox" id="mtxo" name="mtxo" onclick="$(this).attr('value', this.checked ? 1 : 0)" \
+						<input type="checkbox" id="mtxo" name="mtxo" value="<?php echo $mtco;?>" onclick="$(this).attr('value', this.checked ? 1 : 0)" \
                             <?php echo ($mtco==1)?"checked":"";?> />
 					</label>
 			 	</td></tr>
@@ -251,7 +251,7 @@ function checkBrokenLinks($url) {
 			console.log("mtco:%s %s", $mtco, isCheckbox.checked ? 'Is Checked' : 'Is Unchecked');
             //$mtco = isCheckbox.checked ? 1 : 0;
             //document.write(mtco);
-		});    
+		});
 
 		$("#addnewmarket").click(function(){
 			var tmarketid = $("#productmarketlist option:selected").val();
@@ -364,17 +364,18 @@ function checkBrokenLinks($url) {
 					}
 				});*/
 			var data = 'phpfiles/updateprodvendor.php?prodid='+productid+'&vendorid='+vendorid;
-			$.get(data, function(data){
+			$.post(data, function(data){
 					if(data == "SUCCESS") {
 						$("#product-dialog").dialog("close");
 
 						$("#product-dialog").dialog("open");
-						var data = 'phpfiles/productdetails.php?id='+productid;
 
 						$.ajax({
-								url: data,
+								url: 'phpfiles/productdetails.php',
 								type: "POST",
 								cache: false,
+                                data: {id: productid},
+                                dataType: "json",
 								success: function (html) {
 									$('#product-edit').html(html);
 									$('#product-edit').fadeIn('slow');

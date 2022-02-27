@@ -48,8 +48,8 @@ class PS_Pagination {
 		}
 		$this->append = $append;
 		$this->php_self = htmlspecialchars($_SERVER['PHP_SELF'] );
-		if (isset($_GET['page'] )) {
-			$this->page = intval($_GET['page'] );
+		if (isset($_REQUEST['page'] )) {
+			$this->page = intval($_REQUEST['page'] );
 		}
 	}
 	

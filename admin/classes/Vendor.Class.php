@@ -28,12 +28,21 @@ function Vendor()
 		case "Update":
 			$this->Update();
 		break;
-		
-		case "Delete":
-			$this->Delete();
-		break;
-				
-		default:
+
+        case "Delete":
+            $this->Delete();
+            break;
+
+        case "Activate":
+            $this->Activate();
+            break;
+
+        case "Deactivate":
+            $this->Deactivate();
+            break;
+
+
+        default:
 			$this->ManageVendor();
 		}
 	}
@@ -58,7 +67,7 @@ function Vendor()
 			$row = mysqli_fetch_array($res);
 		}
 ?>
-<form action="index.php?module=Vendor&mode=<?php echo $mode; ?>" method="post" id="vendorform" name="vendorform">
+<form action="index.php" method="post" id="vendorform" name="vendorform">
 	<table align="center" width="55%">
     	<tr>
         	<td colspan="2" align="center">
@@ -99,28 +108,44 @@ function Vendor()
 			<?php if(isset($vendor_id)) { ?>
                 <input type="hidden" name="vendor_id" id="vendor_id" value="<?php echo $row['vendor_id']; ?>" />
             <?php } ?>
-                <input type="submit" name="btn_<?php echo $mode; ?>" id="btn_<?php echo $mode; ?>" value="<?php echo $mode; ?>" />
-                <input type="button" name="goback" id="goback" value="Cancel" onclick="window.history.back();" />
+                <input type="hidden" name="module" value="Vendor" />
+                <input type="hidden" name="mode" id="hid_mode" value="<?php echo $mode; ?>" />
+                <input type="submit" name="btn_mode" id="btn_mode" value="<?php echo $mode; ?>" />
+<!--                <input type="button" name="goback" id="goback" value="Cancel" onclick="click_cancel();" />-->
         	</td>
         </tr>
     </table>
 </form>
 <script>
+    function click_cancel() {
+        var frm = document.getElementById('vendorform');
+        frm.reset();
+        $('#hid_mode').val('ManageVendor');
+        frm.submit();
+    }
 	$(function(){
 		$("#vendorform").validate({
 			rules:{
 				vendor_name: {required:true}
 			},
 			submitHandler: function(form) {
-			
-				$("#vendorform").submit();
+				form.submit();
 			}
 		});
 	});
 </script>
 <?php
 	}
-	
+
+    function GotoManage()
+    {
+        echo "<form id='nav' action='index.php' method='post'>";
+        echo "   <input type='hidden' name='module' value='Vendor' />";
+        echo "   <input type='hidden' name='mode' value='ManageVendor' />";
+        echo "</form>";
+        echo "<script type='text/javascript'>document.getElementById('nav').submit();</script>";
+    }
+
  	function Create()
 	{
 		//$sql = "INSERT INTO vendor SET status = 1, vendor_name='".stripper($_POST['vendor_name'])."', www='".stripper($_POST['vendor_desc']."', notes='".stripper($_POST['notes'])."'";
@@ -128,14 +153,15 @@ function Vendor()
 		$res = mysqli_query($this->con, $sql) or die(mysqli_error($this->con));
 		if(!$res)
 			echo mysqli_error($this->con);
-		echo "<script>window.location='index.php?module=Vendor&mode=ManageVendor'</script>";
+
+        $this->GotoManage();
 	}
 	
  	function Update()
     {
         $vendor_id = $_REQUEST['vendor_id'];
 
-        if ($_POST['review_date']) {
+        if ($_REQUEST['review_date']) {
             $review_date = date_format(date_create($_POST['review_date']), "Y-m-d");
         } else {
             $review_date = null;
@@ -143,28 +169,33 @@ function Vendor()
 
         $stmt = mysqli_prepare($this->con,
             'UPDATE vendor SET vendor_name=?,www=?,review_date=?,notes=? WHERE vendor_id=?');
-        mysqli_stmt_bind_param(
-                $stmt,
-                "ssssi",
-                $_POST['vendor_name'],
-                $_POST['vendor_desc'],
-                $review_date,
-                $_POST['notes'],
-                $vendor_id
-        );
-		$res = mysqli_stmt_execute($stmt) or die(mysqli_error($this->con));
-		echo "<script>window.location = 'index.php?module=Vendor&mode=ManageVendor'</script>";
-	}
-	
-	function Delete()
-	{
-		$vendor_id = $_REQUEST['id'];
-		$sql = "DELETE FROM vendor WHERE vendor_id = $vendor_id AND NOT EXISTS (SELECT * FROM product WHERE vendor_id = $vendor_id)";
-		$res = mysqli_query($this->con, $sql) or die(mysqli_error($this->con));
 
-		if (0 == mysqli_affected_rows($this->con))
-			echo "<script>alert ('Vendor not deleted - products exist for this vendor');</script>";
-		echo "<script>window.location = 'index.php?module=Vendor&mode=ManageVendor'</script>";
+        mysqli_stmt_bind_param(
+            $stmt,
+            "ssssi",
+            $_REQUEST['vendor_name'],
+            $_REQUEST['vendor_desc'],
+            $review_date,
+            $_REQUEST['notes'],
+            $vendor_id
+        );
+
+		$res = mysqli_stmt_execute($stmt) or die(mysqli_error($this->con));
+
+        $this->GotoManage();
+
+	}
+
+    function Delete()
+    {
+        $vendor_id = $_REQUEST['id'];
+        $sql = "DELETE FROM vendor WHERE vendor_id = $vendor_id AND NOT EXISTS (SELECT * FROM product WHERE vendor_id = $vendor_id)";
+        $res = mysqli_query($this->con, $sql) or die(mysqli_error($this->con));
+
+        if (0 == mysqli_affected_rows($this->con))
+            echo "<script>alert ('Vendor not deleted - products exist for this vendor');</script>";
+
+        $this->GotoManage();
 /*
 		if(!$res)
 			echo mysqli_error($this->con);
@@ -187,7 +218,24 @@ function Vendor()
 		echo "<script>window.location='index.php?module=Vendor&mode=ManageVendor&msg=$msg'</script>";
 */
 	}
-    
+
+    function Activate()
+    {
+        $vendor_id = $_REQUEST['id'];
+        $sql = "UPDATE vendor SET status = 1 WHERE vendor_id = $vendor_id";
+        $res = mysqli_query($this->con, $sql) or die(mysqli_error($this->con));
+    }
+
+    function Deactivate()
+    {
+        $vendor_id = $_REQUEST['id'];
+        $sql = "UPDATE vendor SET status = 0 WHERE vendor_id = $vendor_id AND NOT EXISTS (SELECT * FROM product WHERE status = 1 AND vendor_id = $vendor_id)";
+        $res = mysqli_query($this->con, $sql) or die(mysqli_error($this->con));
+
+        if (0 == mysqli_affected_rows($this->con))
+            echo "<script>alert ('Vendor not deactivated - active products exist for this vendor');</script>";
+    }
+
     function checkBrokenLinks($url) {
         $h = get_headers($url);
         $status = array();

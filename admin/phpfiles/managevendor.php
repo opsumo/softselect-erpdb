@@ -1,64 +1,24 @@
 <script type="text/javascript">
-function delete_confirm(id)
-{
-var r=confirm("Delete This Vendor Details?");
-if (r==true)
-  {
-  	var url = 'index.php?module=Vendor&mode=Delete&id='+id;
-	 window.location=url;
 
-  }
-else
-  {
-	return false;
-  }
-}
-function deactivate_confirm1(id)
-{
-var r=confirm("Deactivate This Vendor?");
-if (r==true)
-  {
-	var url="phpfiles/vendor_actdct.php?mode=deactivate&id="+id;
-	$.post(url,
-		function(data)
-		{
-			if(data === 'SUCCESS') {
-				window.location.reload();
-			}
-			else {
-				alert('There was an error updating this Vendor, please try again.');
-			}
-		});
-
-  }
-else
-  {
-	return false;
-  }
-}
-
-function activate_confirm1(id)
-{
-var r=confirm("Activate This Vendor?");
-if (r==true)
-  {
-	var url="phpfiles/vendor_actdct.php?mode=activate&id="+id;
-	$.post(url,
-		function(data)
-		{
-			if(data === 'SUCCESS') {
-				window.location.reload();
-			}
-			else {
-				alert('There was an error updating this Vendor, please try again.');
-			}
-		});
-  }
-else
-  {
-	return false;
-  }
-}
+    function vendor_action(action, id) {
+        if (confirm(`${action} This Vendor?`)) {
+            $.ajax({
+                type: "POST",
+                url: "ajax.php",
+                data: {module: "Vendor", mode: action, id: id},
+                complete: function(msg){
+                    window.location.reload();
+                }
+            });
+        }
+        else {
+            return false;
+        }
+    }
+    function edit_vendor(id) {
+        $("#init_id").val(id);
+        $("#initiator").submit();
+    }
 
 </script>
 <p>&nbsp;</p>
@@ -87,7 +47,13 @@ $vendor = isset($_REQUEST['txt_vendor'])?$_REQUEST['txt_vendor']:'';
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td align="center">
-        	<a style="color:#000000; font-weight:bolder; text-decoration:none;" href="index.php?module=Vendor&mode=NewVendor">New Vendor</a>
+<!--        	<a style="color:#000000; font-weight:bolder; text-decoration:none;" href="index.php?module=Vendor&mode=NewVendor">New Vendor</a>-->
+            <form action="index.php" method="post" id="initiator">
+                <input type="hidden" id="init_module" name="module" value="Vendor"/>
+                <input type="hidden" id="init_mode" name="mode" value="NewVendor"/>
+                <input type="hidden" id="init_id" name="id"/>
+                <input type="submit" value="New Vendor"/>
+            </form>
         </td>
 	</tr>
 <?php
@@ -172,7 +138,7 @@ $vendor = isset($_REQUEST['txt_vendor'])?$_REQUEST['txt_vendor']:'';
         if($row['status']==1)
         {
     ?>
-    	<a style="cursor:pointer;" onclick="deactivate_confirm1(<?php echo $row['vendor_id']; ?>)">
+    	<a style="cursor:pointer;" onclick="vendor_action('Deactivate', <?php echo $row['vendor_id']; ?>)">
     		<img src="images/button_green.gif" alt="Active" border="0" />
     	</a>
     <?php
@@ -180,15 +146,29 @@ $vendor = isset($_REQUEST['txt_vendor'])?$_REQUEST['txt_vendor']:'';
         else
         {
     ?>
-    	<a style="cursor:pointer;" onclick="activate_confirm1(<?php echo $row['vendor_id']; ?>)">
+    	<a style="cursor:pointer;" onclick="vendor_action('Activate', <?php echo $row['vendor_id']; ?>)">
     		<img src="images/button_red.gif" alt="Inactive" border="0" />
     	</a>
     <?php
         }
     ?>
     </td>
-    <td align="center"><a href="index.php?module=Vendor&mode=NewVendor&id=<?php echo $row['vendor_id']; ?>"><img src="images/b_edit.png" border="0" alt="Edit" /></a></td>
-    <td align="center"><a onClick="delete_confirm(<?php echo $row['vendor_id'];?>)"><img src="images/deleted.png" border="0" alt="Delete" /></a></td>
+    <td align="center"><a onclick="edit_vendor(<?php echo $row['vendor_id']; ?>)"><img src="images/b_edit.png" border="0" alt="Edit" /></a></td>
+  <?php
+      if($row['product_count'] > 0)
+      {
+  ?>
+      <td align="center">&nbsp;</td>
+  <?php
+      }
+      else
+      {
+  ?>
+      <td align="center"><a onClick="vendor_action('Delete', <?php echo $row['vendor_id'];?>)"><img src="images/deleted.png" border="0" alt="Delete" /></a></td>
+  <?php
+      }
+  ?>
+
   </tr>
 <?php
 			$j++;
