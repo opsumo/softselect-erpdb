@@ -25,12 +25,14 @@
 <?php
 $vendor = isset($_REQUEST['txt_vendor'])?$_REQUEST['txt_vendor']:'';
 ?>
-<table cellspacing="0" cellpadding="5" align="center" id="vendor-table" boder="1">
+<table cellspacing="0" cellpadding="5" align="center" id="vendor-table" border="0">
 	<tr height="60" bgcolor="#FFFFFF">
     	<td align="center" colspan="5">
-			<form method="post" action="">
+			<form method="post">
             	<label><strong>Search Vendor by Name</strong>&nbsp;</label>
             	<input type="text" size="50" name="txt_vendor" id="txt_vendor" value="<?php echo $vendor;?>"/>&nbsp;
+                <input type="hidden" id="srch_module" name="module" value="Vendor"/>
+                <input type="hidden" id="srch_mode" name="mode" value="ManageVendor"/>
                 <input type="submit" name="btn_vendor" value="Go" id="btn_vendor"/>
 			</form>
         </td>
@@ -48,7 +50,7 @@ $vendor = isset($_REQUEST['txt_vendor'])?$_REQUEST['txt_vendor']:'';
 		<td>&nbsp;</td>
 		<td align="center">
 <!--        	<a style="color:#000000; font-weight:bolder; text-decoration:none;" href="index.php?module=Vendor&mode=NewVendor">New Vendor</a>-->
-            <form action="index.php" method="post" id="initiator">
+            <form method="post" id="initiator">
                 <input type="hidden" id="init_module" name="module" value="Vendor"/>
                 <input type="hidden" id="init_mode" name="mode" value="NewVendor"/>
                 <input type="hidden" id="init_id" name="id"/>
