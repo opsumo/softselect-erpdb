@@ -111,7 +111,7 @@ function Vendor()
                 <input type="hidden" name="module" value="Vendor" />
                 <input type="hidden" name="mode" id="hid_mode" value="<?php echo $mode; ?>" />
                 <input type="submit" name="btn_mode" id="btn_mode" value="<?php echo $mode; ?>" />
-<!--                <input type="button" name="goback" id="goback" value="Cancel" onclick="click_cancel();" />-->
+                <input type="button" name="goback" id="goback" value="Cancel" onclick="click_cancel();" />
         	</td>
         </tr>
     </table>
