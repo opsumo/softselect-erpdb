@@ -22,10 +22,6 @@ else
 	return false;
   }
 }
-function prt(col)
-{
-	console.log(col);
-}
 </script>
 <p>&nbsp;</p>
 <?php
@@ -140,7 +136,6 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
 			while($rows = mysqli_fetch_array($result))
 			{
 				//echo $rows[0].','.$rows[1].','.$rows[2].','.$rows[3].','.$rows[4].','.$rows[5].'<br/>';
-				prt(echo $rows[0].','.$rows[1].','.$rows[2].','.$rows[3].','.$rows[4].','.$rows[5]);
 				$databody[$i][0] = $rows[0];
 				$databody[$i][1] = $rows[1];
 				$databody[$i][2] = $rows[2];

@@ -2,7 +2,7 @@
 require_once("DB.Class.php");
 if($_SESSION['admin_login']!="true")
 {
-	echo "<script>window.location='index.php?module=Admin&mode=Logout'</script>";
+	echo "<script>menuButtonClick('Admin', 'Logout');</script>";
 }
 class BlockIP extends DBCon
 	{
@@ -139,7 +139,7 @@ function BlockIP()
 		$res = mysqli_query($this->con, $sql);
 		if(!$res)
 			echo mysqli_error($this->con);
-		echo "<script>window.location='index.php?module=BlockIP&mode=ManageBlockedIP'</script>";
+		echo "<script>menuButtonClick('BlockIP', 'ManageBlockedIP');</script>";
 	}
 	
  	function Update()
@@ -150,7 +150,7 @@ function BlockIP()
 		$res = mysqli_query($this->con, $sql);
 		if(!$res)
 			echo mysqli_error($this->con);
-		echo "<script>window.location='index.php?module=BlockIP&mode=ManageBlockedIP'</script>";
+		echo "<script>menuButtonClick('BlockIP', 'ManageBlockedIP');</script>";
 	}
 	
 	function Delete()
@@ -160,7 +160,7 @@ function BlockIP()
 		$res = mysqli_query($this->con, $sql);
 		if(!$res)
 			echo mysqli_error($this->con);
-		echo "<script>window.location='index.php?module=BlockIP&mode=ManageBlockedIP'</script>";
+		echo "<script>menuButtonClick('BlockIP', 'ManageBlockedIP');</script>";
 	}
 }
 ?>

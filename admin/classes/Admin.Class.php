@@ -4,8 +4,8 @@ class Admin extends DBCon
 	{
 function Admin()
 	{
-	parent::DBCon();		
-	switch($_REQUEST['mode']) 
+	parent::DBCon();
+	switch($_REQUEST['mode'])
 		{
 		case "Login":
 			$this->Login();
@@ -29,14 +29,14 @@ function Admin()
 		
 		case "Logout":
 			session_destroy();
-			echo "<script>window.location='index.php'</script>";
+            echo "<script>menuButtonClick('Admin', 'Home');</script>";
 		break;
 		
 		default:
 			echo "<h2 align='center'>Page Under Construction</h2>";
 		}
 	}
-	
+
  	function Login()
 	{
 		$sql = "SELECT * FROM user WHERE email_address='$_POST[txt_uname]' 
@@ -51,14 +51,14 @@ function Admin()
 			$row = mysqli_fetch_array($res);
 			$_SESSION['admin_login'] = "true";
 			$_SESSION['user_id'] = $row['user_id'];
-			echo "<script>window.location='index.php?module=Admin&mode=Home'</script>";
+            echo "<script>menuButtonClick('Admin', 'Home');</script>";
 		}
 		else
 		{
 			session_destroy();
-			echo "<script>window.location='index.php?error=1'</script>";
+            echo "<script>menuButtonClick('', '');</script>";
 		}
-	}
+    }
 	
 	function Home()
 	{
@@ -102,7 +102,7 @@ function Admin()
 		{
 			if($_POST['txt_uname']=="")
 			{
-				echo "<script>window.location='index.php?module=Admin&mode=ResetPassword'</script>";
+				echo "<script>menuButtonClick('Admin', 'ResetPassword');</script>";
 			}
 			$sql = "SELECT * FROM user WHERE email_address='$_POST[txt_uname]'";
 			$res = mysqli_query($this->con, $sql);
@@ -160,13 +160,13 @@ function Admin()
 			if(!$res1)
 			{
 				echo "Cannot Update Password<br>".mysqli_error($this->con);
-				echo "<script>window.location='index.php?module=Admin&mode=ChangePassword'</script>";
+				echo "<script>menuButtonClick('Admin', 'ChangePassword');</script>";
 			}
-			echo "<script>window.location='index.php?module=Admin&mode=Home'</script>";
+			echo "<script>menuButtonClick('Admin', 'Home');</script>";
 		}
 		else
 		{
-			echo "<script>window.location='index.php?module=Admin&mode=ChangePassword'</script>";
+			echo "<script>menuButtonClick('Admin', 'ChangePassword');</script>";
 		}
 	}
 }

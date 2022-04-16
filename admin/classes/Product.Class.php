@@ -2,7 +2,7 @@
 require_once("DB.Class.php");
 if($_SESSION['admin_login']!="true")
 {
-	echo "<script>window.location='index.php?module=Admin&mode=Logout'</script>";
+	echo "<script>menuButtonClick('Admin', 'Logout');</script>";
 }
 class Product extends DBCon
 	{
