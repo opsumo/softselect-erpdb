@@ -141,24 +141,27 @@ if ('y'==$debug) {
 	echo $rpt_html;
 }
 else {
-	include_once('mpdf/mpdf.php');
+    // Require composer autoload
+    require_once __DIR__ . '/vendor/autoload.php';
 
-	// Create class instances
-	$mpdf=new mPDF('WinAnsi', 'Letter-L', 0, 'Helvetica', 10 ,10 ,10 ,18);
+    // Create class instances
+    $mpdf = new \Mpdf\Mpdf([
+        mode => 'en-US',
+        format => 'Letter-L',
+        default_font_size => 0,
+        default_font => 'Helvetica'
+    ]);
 
-	//$mpdf->useOnlyCoreFonts = true;
+    $stylesheet = file_get_contents('css/report-mpdf.css');
+    $mpdf->WriteHTML($stylesheet,1);
 
-	// $stylesheet = file_get_contents(sfConfig::get('sf_web_dir').'/css/mpdfstyletables.css');
-	$stylesheet = file_get_contents('css/report-mpdf.css');
-	$mpdf->WriteHTML($stylesheet,1);   // The parameter 1 tells that this is css/style only and no body/html/text
-	$mpdf->SetHTMLFooter('<div class="footer"><div class="footer-text">ERP Comparison Database from Engleman Associates, Inc. / SoftSelect  -  www.softselect.com  888-421-8372&nbsp;&nbsp;© Copyright '.$year.' - All rights reserved.</div><div class="footer-pagenum">{PAGENO}</div></div>');
+    $mpdf->SetHTMLFooter('<div class="footer"><div class="footer-text">ERP Comparison Database from Engleman Associates, Inc. / SoftSelect  -  www.softselect.com  888-421-8372&nbsp;&nbsp;© Copyright '.$year.' - All rights reserved.</div><div class="footer-pagenum">{PAGENO}</div></div>');
 
-	$mpdf->WriteHTML($rpt_html, 2);
-//    $mpdf->WriteHTML($rpt_html);
+    $mpdf->WriteHTML($rpt_html, 2);
 
-	header('Content-disposition: attachment; filename="SoftSelect%20ERP%20Database%20Report.pdf"');
+    header('Content-disposition: attachment; filename="SoftSelect%20ERP%20Database%20Report.pdf"');
 
-	// Output the PDF file:
-	$mpdf->Output('SoftSelect ERP Database Report.pdf', 'I');
+    // Output the PDF file:
+    $mpdf->Output('SoftSelect ERP Database Report.pdf', 'I');
 }
 ?>

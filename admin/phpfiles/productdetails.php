@@ -349,9 +349,11 @@ function checkBrokenLinks($url) {
 						var data = 'phpfiles/productdetails.php?id='+productid;
 
 						$.ajax({
-								url: data,
+								url: 'phpfiles/productdetails.php',
 								type: "POST",
 								cache: false,
+                                data: {id: productid},
+                                dataType: "json",
 								success: function (html) {
 									$('#product-edit').html(html);
 									$('#product-edit').fadeIn('slow');

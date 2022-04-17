@@ -212,14 +212,14 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
 	else
 		$email = "";
 
-
+    $defaultTimezone = new DateTimeZone(date_default_timezone_get());
     if (empty($_REQUEST['txt_to'])) {
         $date = new DateTime();
         $to = $date->format('Y-m-d H:i:s');
     } else {
         $date = new DateTime($_REQUEST['txt_to'], new DateTimeZone('America/Los_Angeles'));
         $date->add(new DateInterval('P1D'));
-        $date->setTimezone(date_default_timezone_get());
+        $date->setTimezone($defaultTimezone);
         $to = $date->format('Y-m-d H:i:s');
     }
     if (empty($_REQUEST['txt_from'])) {
@@ -228,7 +228,7 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
         $from = $date->format('Y-m-d H:i:s');
     } else {
         $date = new DateTime($_REQUEST['txt_from'], new DateTimeZone('America/Los_Angeles'));
-        $date->setTimezone(date_default_timezone_get());
+        $date->setTimezone($defaultTimezone);
         $from = $date->format('Y-m-d H:i:s');
     }
 
@@ -271,9 +271,9 @@ $tfrom = isset($_REQUEST['txt_to'])?$_REQUEST['txt_to']:'';
 
 	if($email!="")
 	{
-		$sql = $sql."AND u.email_address LIKE  q.query_date DESC
+		$sql = $sql."AND u.email_address = '".$email."'
 		";
-		$qs += "&txt_report=".$email;
+		$qs .= "&txt_email=".$email;
 	}
 
     $sql = $sql."ORDER BY q.query_date DESC";

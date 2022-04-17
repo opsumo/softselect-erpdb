@@ -383,30 +383,37 @@ table {
 
     <div id="usage-information">
         <div class="oneColFixCtrHdr" id="topspantext">
-            <h2 class="style2"><em>Understanding the ERP  Comparison Data</em></h2>
+            <h2 class="style2"><em>Understanding the ERP Comparison Data</em></h2>
         </div>
         <!-- This clearing element should immediately follow the #mainContent div in order to force the #container div to contain all child floats -->
 
         <div class="oneColFixCtrHdr" id="colspan2to4">
-            <p>The report produced by the ERP comparison database shows ERP software that have a <em>history of  use</em> in a particular <em>type of company</em>.  Criteria to describe a <em>type of company</em> are (1) company size (in yearly gross sales), and optionally (2) one or two industry types. For criteria selected the <em>history of use</em> information is shown by the following strength  measures:</p>
+            <p>ERP in the database are assessed and attributed based on the sizes (in revenue) and industry types of customers using the ERP product. These attributes don’t change rapidly, and are used for creating ERP lists for a particular user.  When producing a list of ERP, these ERP attributes are referred to as ‘History of Use’ measures and have the following three levels:</p>
             <p><img src="images/legend.jpg" alt="History Of Use Legend" /></p>
+            <p>The following is a simplified sample output from the ERP comparison database:</p>
             <p><img src="images/Chart_SampleERPData.jpg" alt="Sample Data ERP Search" width="500" height="238" /></p>
-            <h2>Procedures  to produce an ERP Comparison list: </h2>
+            <h3>Procedures  to produce an ERP Comparison list: </h3>
             <ol>
-                <li>Disable any pop-up  blockers for this website—as needed.</li>
-                <li>Key  criterion: Using the ERP comparison database query form, select a company size  range for your business (projected 3 to 5 year company size). This step is  required to enable results to be generated.</li>
-                <li>Optional  criteria: Select other optional values for primary industry and secondary  industry as is relevant.</li>
-                <li>Adding an ERP: If the ERP list does not include an ERP for which you have an interest, select the control ‘Add Specific ERP to report’ and then search for the ERP to add to the list. Once this form is closed, the new ERP will be added to the existing list. Three additional ERP may be added.</li>
-                <li>Printing the report: Select one of the printer icons and follow the instructions.</li></ol>
-            <p>This data <strong>is not</strong> designed for use in making final decisions on the suitability of particular ERP software for a specific company seeking ERP. The only way to understand true suitability of candidate software solutions is to carefully and consistently measure them against your organization's most important functional and non-functional priorities.</p>
-            <p>&nbsp;</p>
-            <p><strong>Cloud versus on site ERP:</strong> The ERP database measures cloud-based (software as a service [SAAS]) the same as on-premise ERP. The attributes that have differentiated cloud-based versus on-premise are not relevant to the comparison database criteria. These differentiating factors are becoming less relevant as on-premise sellers have ways to offer their software remotely, have the software be hosted, and lower the large upfront costs.</p>
-            <p>&nbsp;</p>
-            <p><strong>Industry-specific add-on software:</strong> Some ERP sellers partner with independent software developers that build industry-specific vertical solutions that are integrated to the original ERP. For a variety of reasons it is not practical to list multiple instances of the ERP with all of the various industry-specific add-on software—although there are a few exceptions in the database. The SoftSelect ERP database attempts to reasonable reflect these industry-specific addons with the <em>industry type</em> criterion.</p>
-            <p>&nbsp;</p>
+                <li>Disable any pop-up blockers for this website—as needed.</li>
+                <li>Key criterion: Using the ERP comparison database query form, select a company size range for your business (projected company size in 3 to 5 years). This step is required to enable ERP listing results to be generated.</li>
+                <li>Optional criteria: Select other optional values for primary industry and secondary industry as is relevant. In most cases, to reasonably narrow the list, pick the primary industry.</li>
+                <li>Adding an ERP: If the ERP list does not include an ERP for which you have an interest, select the control ‘Add Specific ERP to report’ and then search for the ERP to add to the list. If found, select it, and once this form is closed, the new ERP will be added to the existing list. Three additional ERP may be added.</li>
+                <li>Printing the report: Select one of the Print controls and follow the instructions.</li>
+            </ol>
+            <p><strong>ERP Not Listed:</strong> Some ERP software products are not included in this ERP list as they are or were:
+            <ol><li>Not significantly suitable for use in manufacturing and/or distribution firms.</li>
+                <li>Overall considered weak in market presence or significantly dated technology.</li>
+                <li>Not effectively supported in the North American market.</li>
+                <li>An add-on solution to a base ERP that attempts to make the base ERP suitable for a particular vertical industry.</li></ol>
+            </p>
+            <p><strong><italic>Cloud ERP</italic> Status:</strong> Most ERP in this ERP database can be offered remotely or 'in the Cloud' through various means. Accessing ERP remotely relieves the buyer from managing hardware and software, which is usually good. However, everything else about remote access ERP is largely designed to benefit the ERP seller unilaterally. At the top of the list are unbounded options to increase fees to customers who cannot change ERP without great cost and risk. Here's a <a href="https://www.softselect.com/cloud-erp-benefits-risks-and-hype/">link to our white paper</a> on truly important details to understand when arranging access to Cloud ERP.</italic></p>
+            <p><strong>Industry-specific ERP add-on software:</strong> Some ERP sellers partner with independent software developers that build industry-specific vertical solutions that are integrated to the original ERP. For a variety of reasons it is not practical to list multiple instances of the ERP with all of the various industry-specific add-on software—although there are a few exceptions in the database. The SoftSelect ERP database attempts to reasonable reflect the presence of known and stable industry-specific add-ons with the industry type criterion.</p>
             <p><strong>Open Source ERP:</strong> There are a few open source ERP in the ERP comparison database—however others were excluded based on general risks with depending on such a software for critical business process support.</p>
-            <p>&nbsp;</p>
-            <p><strong>ERP Database Usage Terms:</strong> This online ERP software database is the copyrighted and intellectual property of Engleman Associates, Inc. and can only be used for enterprise software projects for which you are directly involved.</p>
+            <p><strong>ERP Database Usage Terms:</strong> </p>
+            <ol><li><strong>Copyright:</strong> This online ERP database and resultant reports are the copyrighted and intellectual property of Engleman Associates, Inc., and can only be used for enterprise software planning activities for which the user is directly involved. Users may not repackage or resell this ERP system data for other purposes.</li>
+                <li><strong>Conditional Advice:</strong> This ERP data and listing process is not designed for making final decisions on the suitability of particular ERP for a specific company seeking ERP. The only way to understand actual suitability of candidate ERP solutions is to carefully, consistently and directly measure them against your organization's most important functional and non-functional priorities.</li>
+                <li><strong>Acknowledgement:</strong> By using the ERP comparison database you agree to these terms and acknowledge the ERP comparison database purpose and limitations stated herein.</li>
+            </ol>
         </div>
     </div>
 
