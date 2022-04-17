@@ -19,7 +19,10 @@ $(document).ready(function () {
         width: 740,
         modal: true,
         draggable: true,
-        resizable: true
+        resizable: true,
+        open : function() {
+            $('body').scrollTop(0);
+        }
     });
 
     // $('#venpac-dialog-form').hide();
@@ -53,7 +56,7 @@ $(document).ready(function () {
     }).click(function () {
 
         // move this out of the iframe
-        $('#usage-information').dialog('open');
+        $('#usage-information').dialog('open').scrollTop("0");
 
         // window.open('../../packages/exERP-Comparison-Database-Interpretation.html', '_blank');
     });

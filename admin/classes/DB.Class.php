@@ -377,18 +377,18 @@
 				/*else
 				{
 				$_REQUEST["page"]=$custPage;
-				$_GET["page"]=$custPage;
+				$_REQUEST["page"]=$custPage;
 				}*/
 				$limit =$rec_pp;
 				$getpages=$p->findPages($num,$limit);
 				if(isset($_REQUEST["page"]) and $_REQUEST["page"]>$getpages)
 				{
 					$_REQUEST["page"]=$getpages;
-					$_GET["page"]=$getpages;
+					$_REQUEST["page"]=$getpages;
 				}
 
 				/* store page in temp session variable*/
-				//$_SESSION['tempPage']=$_GET["page"];
+				//$_SESSION['tempPage']=$_REQUEST["page"];
 
 				$start = $p->findStart($limit);
 				$resultPaging=$this->dbFetchAll($strSql." Limit $start,$limit");

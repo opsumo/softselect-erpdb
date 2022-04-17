@@ -1,10 +1,11 @@
 <?php
 	if($_SESSION['admin_login']!="true")
 	{
-		echo "<script>window.location='index.php?module=Admin&mode=Logout'</script>";
+        echo $_SESSION['admin_login'];
+//		echo "<script>menuButtonClick('Admin', 'Logout');</script>";
 	}
-	if(isset($_POST['btn_go']) && $_POST['period']!="")
-		$reportDays = $_POST['period'];
+	if(isset($_REQUEST['btn_go']) && $_REQUEST['period']!="")
+		$reportDays = $_REQUEST['period'];
 	else
 		$reportDays = 10;
 	

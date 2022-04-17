@@ -389,46 +389,46 @@ session_start();
 		}
 	});
         $("#menu_home").click(function(e){
-            $("#input_module").val('Admin');
-            $("#input_mode").val('Home');
+            $("#menu_form_module").val('Admin');
+            $("#menu_form_mode").val('Home');
 
         });
         $("#menu_users").click(function(e){
-            $("#input_module").val('Users');
-            $("#input_mode").val('ManageUsers');
+            $("#menu_form_module").val('Users');
+            $("#menu_form_mode").val('ManageUsers');
 
         });
         $("#menu_history").click(function(e){
-            $("#input_module").val('Report');
-            $("#input_mode").val('ManageReport');
+            $("#menu_form_module").val('Report');
+            $("#menu_form_mode").val('ManageReport');
 
         });
         $("#menu_report").click(function(e){
-            $("#input_module").val('Query');
-            $("#input_mode").val('QueryReport');
+            $("#menu_form_module").val('Query');
+            $("#menu_form_mode").val('QueryReport');
 
         });
         $("#menu_blacklist").click(function(e){
-            $("#input_module").val('BlockIP');
-            $("#input_mode").val('ManageBlockedIP');
+            $("#menu_form_module").val('BlockIP');
+            $("#menu_form_mode").val('ManageBlockedIP');
 
         });
         $("#menu_logout").click(function(e){
-            $("#input_module").val('Admin');
-            $("#input_mode").val('Logout');
+            $("#menu_form_module").val('Admin');
+            $("#menu_form_mode").val('Logout');
 
         });
         $("#menu_industry").click(function(e){
-            $("#input_module").val('Industry');
-            $("#input_mode").val('ManageIndustries');
+            $("#menu_form_module").val('Industry');
+            $("#menu_form_mode").val('ManageIndustries');
         });
         $("#menu_vendor").click(function(e){
-            $("#input_module").val('Vendor');
-            $("#input_mode").val('ManageVendor');
+            $("#menu_form_module").val('Vendor');
+            $("#menu_form_mode").val('ManageVendor');
         });
         $("#menu_product").click(function(e){
-            $("#input_module").val('Product');
-            $("#input_mode").val('ManageProduct');
+            $("#menu_form_module").val('Product');
+            $("#menu_form_mode").val('ManageProduct');
         });
     $(function() {
         $( "#vendor_review_date" ).datepicker({
@@ -462,10 +462,9 @@ function valSubmit()
 	return valid;
 }
     function menuButtonClick(module, mode) {
-        alert($("#module").val());
-        $("#module").val(module);
-        $("#mode").val(mode);
-        $("#menu_form").submit();
+        $("#menu_form_module").val(module);
+        $("#menu_form_mode").val(mode);
+        $("#menu_form").submit()
     }
 </script>
 <style type="text/css">
@@ -546,13 +545,13 @@ function valSubmit()
         <div id="header">
             <div id="logo"></div>
          </div>
+    <form id="menu_form" method="post">
+        <input type="hidden" id="menu_form_module" name="module"/>
+        <input type="hidden" id="menu_form_mode" name="mode"/>
 <?php
 if(isset($_SESSION['admin_login']) && $_SESSION['admin_login']==='true')
 {
 ?>
-    <form id="menu_form" action="index.php" method="post">
-        <input type="hidden" id="input_module" name="module" value="Admin"/>
-        <input type="hidden" id="input_mode" name="mode" value="Home"/>
          <div id="menu">
                  <ul>
                      <li><input type="submit" id="menu_home" value="Home" class="menu_link"/></li>
@@ -566,38 +565,35 @@ if(isset($_SESSION['admin_login']) && $_SESSION['admin_login']==='true')
                      <li><input type="submit" id="menu_logout" value="Logout" class="menu_link"/></li>
                  </ul>
           </div>
-    </form>
 <?php
 	}
-?>                
-                
+
+?>
+    </form>
+
            <div id="content">
                <!--<div id="min_height">-->
 <?php
 require_once("classes/DB.Class.php");
-$Obj = new DBCon();								
-	if(isset($_REQUEST['module'])){
+$Obj = new DBCon();
+
+if((isset($_SESSION['admin_login']) && $_SESSION['admin_login'] == "true") || (isset($_REQUEST['mode']) && $_REQUEST['mode'] == "Login")) {
+	if(isset($_REQUEST['module']) && $_REQUEST['module'] != ""){
 		$Class_Name = $_REQUEST['module'];
 		$file_name = "classes/".$Class_Name.".Class.php";
 		if (file_exists($file_name)) {
 			require_once($file_name); // Include that file
 			$Class_Obj = new $Class_Name; // Create an instance for that class
-		}else {
+		} else {
 				$err_msg = "<center> Module not found </center>";
 				echo $err_msg;
 		}
-	} 
-	else
-	{
-		if(isset($_SESSION['admin_login']))
-		{
-			if($_SESSION['admin_login'] == "true")
-				echo "<script>window.location='index.php?module=Admin&mode=Home'</script>";
-		}
-		else
-			include('phpfiles/login.php');
-	}
-
+	} else {
+        echo "<script>menuButtonClick('Admin', 'Home')</script>";
+    }
+} else {
+    require_once('phpfiles/login.php');
+}
 $year = (new DateTime())->format('Y');
 ?>
 			<!--</div>-->

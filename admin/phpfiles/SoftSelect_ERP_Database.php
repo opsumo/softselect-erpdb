@@ -290,22 +290,35 @@ if(!empty($result['header']))
 				(2) Industries (primary and secondary) were added by the person configuring this report.<br/><br/>
 				<?php endif; ?>
 
-                <u>ERP Database Purpose and Limitations</u>: This database provides high-level information that shows software packages that
-                have a track record in a particular type of company. This information is useful in:
-                <ul>
-                    <li>Creating initial ERP lists (long lists) </li>
-                    <li>Challenging ERP short lists</li>
-                    <li>Validating current ERP</li>
-                </ul>
-					This data is not designed for use in making final decisions on the suitability of particular software
-					packages for a specific company seeking ERP. The only way to understand true suitability of candidate
-					software solutions is to carefully and consistently measure them against your organization's most
-					important functional and non-functional priorities. Also ERP vendor viability is an increasingly relevant
-					topic and should be a key differentiating factor in any ERP search.<p />
-					<u>ERP Database Usage Terms</u>: This online enterprise software database is the copyrighted and intellectual
-					property of Engleman Associates, Inc. and can only be used for enterprise software projects for which you
-					are directly involved. This ERP evaluation database has been available since 2001 and includes links
-					to all listed ERP software vendors from North America.
+                <h1>Purpose and Limitations of the ERP Comparison Database</h1>
+                <h2>ERP Database Design Approach</h2>
+                <ol>
+                    <li><strong>Main Assessment Criteria: </strong>ERP in the database are assessed and attributed based on the sizes (in revenue) and industry types of customers using the ERP product. These attributes don’t change rapidly and are used for creating ERP lists for a particular user.<br />
+                        &nbsp;</li>
+                    <li><strong>ERP Not Listed: </strong>Some ERP software products are not included in this ERP list as they are or were:
+                        <ol>
+                            <li style="list-style:lower-alpha">Not significantly suitable for use in manufacturing and/or distribution firms.</li>
+                            <li style="list-style:lower-alpha">Overall considered weak in market presence or significantly dated technology.</li>
+                            <li style="list-style:lower-alpha">Not effectively supported in the North American market.</li>
+                            <li style="list-style:lower-alpha">An add-on solution to a base ERP that attempts to make the base ERP suitable for a particular vertical industry.</li>
+                        </ol>
+                    </li>
+                    <li><strong>Cloud ERP Status: &nbsp;</strong>Most ERP in this ERP database can be offered remotely or 'in the Cloud' through various means. Accessing ERP remotely relieves the buyer from managing hardware and software, which is usually good. However, everything else about remote access ERP is largely designed to benefit the ERP seller unilaterally. At the top of the list are unbounded options to increase fees to customers who cannot change ERP without great cost and risk. Here's a <a href="https://www.softselect.com/downloads/Cloud_ERP_Whitepaper-from_EAI-SoftSelect.pdf"><span>link to our white paper</span></a> on truly important details to understand when arranging access to Cloud ERP.</li>
+                </ol>
+                <h2>ERP Database Usage Terms</h2>
+                <ol>
+                    <li><strong>Copyright:</strong> This online ERP database and resultant reports are the copyrighted and intellectual property of Engleman Associates, Inc., and can only be used for enterprise software planning activities for which the user is directly involved. Users may not repackage or resell this ERP system data for other purposes.<br />
+                        &nbsp;</li>
+                    <li><strong>Conditional Advice: </strong>This ERP data and listing process is not designed for making final decisions on the suitability of a particular ERP for a specific company seeking ERP. The only way to understand the actual suitability of candidate ERP solutions is to carefully, consistently, and directly measure them against your organization's most important functional and non-functional priorities.<br />
+                        &nbsp;</li>
+                    <li><strong>Acknowledgment:</strong>&nbsp;By using the ERP comparison database you agree to these terms and acknowledge the ERP comparison database purpose and limitations stated herein.</li>
+                </ol>
+                <strong>Why This Data is Made Available: &nbsp;</strong>This ERP software vendor directory is a summary version of the EAI-SoftSelect total ERP software data and insight. Our company makes this summary ERP software data available to create awareness of its broader business software insight and ERP services. This ERP application database has been managed and enhanced since 2001 and includes links to all listed ERP software vendors from North America.
+                <p><strong>Please contact <a href="mailto:administration@softselect.com">administration@softselect.com</a> if you have any questions.</strong></p>
+
+                <p>Engleman Associates, Inc.<br />
+                    <a href="http://www.softselect.com/">www.softselect.com</a><br />
+                    360-699-6150</p>
              </td>
         </tr>
     </table>

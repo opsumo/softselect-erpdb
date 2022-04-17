@@ -31,7 +31,9 @@ with (thisform)
 <br/>
 <br/>
 <br/>
-	<form action="index.php?module=Admin&mode=Login" method="post" onsubmit="return validate_form(this)">
+	<form method="post" onsubmit="return validate_form(this)">
+        <input type="hidden" name="module" value="Admin" />
+        <input type="hidden" name="mode" value="Login" />
     <table align="center" style="border:1px solid #ddd;border-collapse:collapse;background:#ffffff;font-family:Arial,Verdana;">
     	<tr>
     	<td><img src="images/key.jpg" width="140px" height="140px"/></td>

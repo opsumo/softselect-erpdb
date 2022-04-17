@@ -2,7 +2,7 @@
 require_once("DB.Class.php");
 if($_SESSION['admin_login']!="true")
 {
-	echo "<script>window.location='index.php?module=Admin&mode=Logout'</script>";
+	echo "<script>menuButtonClick('Admin', 'Logout');</script>";
 }
 class Industry extends DBCon
 	{
@@ -110,7 +110,7 @@ $industry_id = isset($_REQUEST['id'])?$_REQUEST['id']:'';
 		$res = mysqli_query($this->con, $sql);
 		if(!$res)
 			echo mysqli_error($this->con);
-		echo "<script>window.location='index.php?module=Industry&mode=ManageIndustries'</script>";
+		echo "<script>menuButtonClick('Industry', 'ManageIndustries');</script>";
 	}
 	
  	function Update()
@@ -120,7 +120,7 @@ $industry_id = isset($_REQUEST['id'])?$_REQUEST['id']:'';
 		$res = mysqli_query($this->con, $sql);
 		if(!$res)
 			echo mysqli_error($this->con);
-		echo "<script>window.location='index.php?module=Industry&mode=ManageIndustries'</script>";
+		echo "<script>menuButtonClick('Industry', 'ManageIndustries');</script>";
 	}
 	
  	function ManageIndustries()
@@ -136,12 +136,12 @@ $industry_id = isset($_REQUEST['id'])?$_REQUEST['id']:'';
 		$res = mysqli_query($this->con, $sql);
 		if(!$res)
 			echo mysqli_error($this->con);
-		echo "<script>window.location='index.php?module=Industry&mode=ManageIndustries'</script>";
+		echo "<script>menuButtonClick('Industry', 'ManageIndustries');</script>";
 	}
 
 	function Cancel()
 	{
-		echo "<script>window.location='index.php?module=Industry&mode=ManageIndustries'</script>";
+		echo "<script>menuButtonClick('Industry', 'ManageIndustries');</script>";
 	}
 }
 ?>
